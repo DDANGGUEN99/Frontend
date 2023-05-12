@@ -1,7 +1,10 @@
-const Input = ({ id, disabled, type, formatPrice, errors}) => {
+"use client"
+
+
+export default function Input ({ id, disabled, type, formatPrice, errors, label }){
   return (
     <>
-      <div className="w-full relative">
+      <div className="w-[400px] relative">
         {formatPrice && (
           <BiDollar
             size={24}
@@ -15,8 +18,7 @@ const Input = ({ id, disabled, type, formatPrice, errors}) => {
           type={type}
           className={`peer w-full p-4 pt-6 font-light bt-white border-2 rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed 
         ${formatPrice ? "pl-9" : "pl-4"}
-        ${errors[id] ? "border-rose-500" : "border-neutral-300"}
-        ${errors[id] ? "focus:border-rose-500" : "focus:border-black"}
+
 
         `}
         />
@@ -27,7 +29,6 @@ const Input = ({ id, disabled, type, formatPrice, errors}) => {
       peer-placeholder-shown:translate-y-0
       peer-focus:scale-75
       peer-focus:-translate-y-4
-      ${errors[id] ? "text-rose-500" : "text-zinc-400"}
       `}
         >
           {label}
