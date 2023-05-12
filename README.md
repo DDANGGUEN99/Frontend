@@ -1,1 +1,0 @@
-# Frontend 파일입니다.dd
