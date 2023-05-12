@@ -1,5 +1,6 @@
 "use client";
 
+import useLoginInput from "@/app/hooks/useLoginInput";
 import useRegisterInput from "@/app/hooks/useRegisterInput";
 
 export default function Input({
@@ -10,6 +11,7 @@ export default function Input({
   label,
   outline,
 }) {
+  const loginInput = useLoginInput();
   const registerInput = useRegisterInput();
   const handleChangeInput = (e) => {
     switch (id) {
@@ -27,6 +29,12 @@ export default function Input({
         break;
       case "registerConfirmPassword":
         registerInput.setConfirmPassword(e.target.value);
+        break;
+      case "loginEmail":
+        loginInput.setEmail(e.target.value);
+        break;
+      case "loginPassword":
+        loginInput.setPassword(e.target.value);
         break;
     }
   };

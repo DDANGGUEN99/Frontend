@@ -1,10 +1,12 @@
 "use client";
 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import Input from "../components/inputs/Input";
 import useRegisterInput from "../hooks/useRegisterInput";
 
 export default function Register() {
+  const router = useRouter()
   // nickname, email, password, confirmPassword, locationId를 가져옴.
   const { nickname, email, password, confirmPassword, locationId } =
     useRegisterInput();
@@ -21,6 +23,8 @@ export default function Register() {
     try {
       const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/signup`, newUser)
       console.log(response)
+      router.push('/main')
+
     } catch (error) {
       console.log(error.data.errorMessage)
     }
