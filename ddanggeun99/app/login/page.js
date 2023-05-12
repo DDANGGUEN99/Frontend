@@ -7,11 +7,11 @@ import { FcGoogle } from "react-icons/fc";
 export default function Login() {
   return (
     <>
-      <div className="mt-12 mb-32 h-full flex flex-col justify-between">
-        <div className="flex justify-center items-center pt-10 pb-20">
+      <div className="mt-12 mb-32 h-full flex flex-col justify-around">
+        <div className="flex justify-center items-center pt-20 pb-10">
           <img width="300px" src="/images/carrot.png" />
         </div>
-        <div className="flex flex-col h-full justify-start mb-10 items-center">
+        <div className="flex flex-col h-full justify-center mb-10 items-center">
           <RegisterInput id="email" label="이메일" />
           <RegisterInput id="password" label="비밀번호" type="password" />
         </div>
@@ -37,7 +37,7 @@ function RegisterInput({ id, label, confirm, type }) {
   return (
     <div className="flex mt-10 w-full pl-28">
       <div className="cursor-default pl-2 w-28 flex justify-start items-center">{label}</div>
-      <Input id={id} label={label} type={type} />
+      <Input id={id} label={label} type={type} outline />
       <div
         className={`flex ml-4 py-0 bg-orange-400 text-white ${
           confirm && "px-2"
