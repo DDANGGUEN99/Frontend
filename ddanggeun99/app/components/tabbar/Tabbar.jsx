@@ -7,7 +7,7 @@ import { FiUser } from "react-icons/fi";
 
 function Tabbar() {
   return (
-    <div className="absolute h-20 bottom-0 w-full bg-white z-10 shadow-sm text-5xl text-center text-black flex justify-around">
+    <div className="absolute h-20 bottom-0 w-full bg-white z-10 shadow-sm text-5xl text-center text-black flex justify-around max-w-screen-md mx-auto " >
       <div className="flex flex-col justify-center items-center">
         <BiHomeAlt />
         <p className="text-lg">홈</p>
