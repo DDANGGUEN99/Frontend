@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${font.className} `}>
-        <div className="flex flex-col max-w-screen-md mx-auto">
+        <div className="flex flex-col max-w-screen-md mx-auto h-full border-x-[2px]">
           <Navbar />
           {children}
           <Tabbar />
