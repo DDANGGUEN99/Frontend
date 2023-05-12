@@ -1,16 +1,36 @@
 "use client";
 
+import useRegisterInput from "@/app/hooks/useRegisterInput";
+
 export default function Input({
   id,
   disabled,
   type,
   formatPrice,
-  errors,
   label,
   outline,
-  register,
-  required
 }) {
+  const registerInput = useRegisterInput();
+  const handleChangeInput = (e) => {
+    switch (id) {
+      case "registerEmail":
+        registerInput.setEmail(e.target.value);
+        break;
+      case "registerNickname":
+        registerInput.setNickname(e.target.value);
+        break;
+      case "registerPassword":
+        registerInput.setPassword(e.target.value);
+        break;
+      case "locationId":
+        registerInput.setLocationId(e.target.value);
+        break;
+      case "registerConfirmPassword":
+        registerInput.setConfirmPassword(e.target.value);
+        break;
+    }
+  };
+
   return (
     <>
       <div className="w-[400px] relative">
@@ -21,6 +41,7 @@ export default function Input({
           />
         )}
         <input
+          onChange={handleChangeInput}
           id={id}
           disabled={disabled}
           // {register(id, { required })}
