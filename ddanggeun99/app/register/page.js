@@ -31,6 +31,26 @@ export default function Register() {
     }
   };
 
+
+  // 중복 체크 함수
+  const onSubmitConfirm = async (e) => {
+    if(e.target.name === "email") {
+      // 이메일 중복 체크
+      try {
+        await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/checkEmail`,{email})
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      // 닉네임 중복 체크
+      try {
+        await axios.get(`${process.env.REACT_APP_SERVER_URL}/api/checkNickname`,{nickname})
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
   return (
     <>
         <div className="flex flex-col h-full gap-10 justify-center ">
@@ -42,6 +62,7 @@ export default function Register() {
             name="email"
             label="이메일"
             confirm="중복 확인"
+            onSubmitConfirm = {onSubmitConfirm}
             outline
           />
           <RegisterInput
@@ -63,6 +84,7 @@ export default function Register() {
             name="nickname"
             label="닉네임"
             confirm="중복 확인"
+            onSubmitConfirm={onSubmitConfirm}
             outline
           />
           <RegisterInput id="locationId" label="거주지" outline />
@@ -77,7 +99,7 @@ export default function Register() {
   );
 }
 
-function RegisterInput({ id, label, confirm, type }) {
+function RegisterInput({ id, label, confirm, type, onSubmitConfirm }) {
   return (
     <>
       <div className="flex w-11/12 pl-20 items-center">
@@ -86,6 +108,7 @@ function RegisterInput({ id, label, confirm, type }) {
         </div>
         <Input id={id} label={label} type={type} outline />
         <div
+          onClick={onSubmitConfirm}
           className={`flex ml-4 py-0 bg-orange-400 text-white 
           ${
             confirm && "px-2"
