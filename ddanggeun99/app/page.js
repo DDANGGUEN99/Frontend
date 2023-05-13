@@ -1,6 +1,9 @@
 
+
 export default function Home() {
-  return (<>
-  <div>hello</div>
-  </>)
+  return (
+    <div className="pt-14">
+      Start Page
+    </div>
+  );
 }

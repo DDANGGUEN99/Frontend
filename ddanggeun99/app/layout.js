@@ -13,7 +13,8 @@ const font = Nunito({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${font.className}`}>
+      <body className={font.className} >
+        <Navbar />
         <div className="flex flex-col justify-between border-[2px]  max-w-screen-md mx-auto h-full">
           {children}
         </div>
