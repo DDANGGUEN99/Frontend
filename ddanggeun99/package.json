@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "deploy": "next build && next export && aws s3 sync out/ s3://whats-your-favorite-music"
-    },
+  },
   "dependencies": {
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
@@ -19,8 +19,8 @@
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.11.1",
-    "tailwindcss": "3.3.2",
     "react-scripts": "^5.0.1",
+    "tailwindcss": "3.3.2",
     "zustand": "^4.3.8"
   }
 }
