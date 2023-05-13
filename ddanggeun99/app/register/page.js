@@ -31,8 +31,9 @@ export default function Register() {
     }
   };
 
+
+  // 중복 체크 함수
   const onSubmitConfirm = async (e) => {
-    console.log(1)
     if(e.target.name === "email") {
       // 이메일 중복 체크
       try {
