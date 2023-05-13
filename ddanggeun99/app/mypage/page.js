@@ -1,9 +1,13 @@
 import { BsList } from "react-icons/bs";
 import { AiOutlineShopping, AiOutlineHeart } from "react-icons/ai";
 import { MdNavigateNext } from "react-icons/md";
+import Navbar from "../components/navbar/Navbar";
+import Tabbar from "../components/tabbar/Tabbar";
 
 function Mypage() {
-  return (
+  return ( 
+    <>
+    <Navbar page="mypage"/>
     <div className="pt-12 p-3">
       <div className="pt-[30px] flex justify-between items-center">
         <img className="w-[50px] rounded-full" src="https://png.pngtree.com/element_our/20190531/ourmid/pngtree-yellow-carrot-illustration-image_1295171.jpg"></img>
@@ -27,6 +31,8 @@ function Mypage() {
         </div>
       </div>
     </div>
+    <Tabbar/>
+    </>
   )
 }
 
