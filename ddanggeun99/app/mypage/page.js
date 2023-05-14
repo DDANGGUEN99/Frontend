@@ -1,8 +1,10 @@
 import { BsList } from "react-icons/bs";
-import { AiOutlineShopping, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineShopping, AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
 import Navbar from "../components/navbar/Navbar";
 import Tabbar from "../components/tabbar/Tabbar";
 import EditLink from "./EditLink";
+import { MdOutlineNavigateNext } from "react-icons/md";
+
 
 function Mypage() {
   return (
@@ -15,18 +17,18 @@ function Mypage() {
           <EditLink/>
         </div>
 
-        <div className="p-3 border rounded-lg border-dashed border-orange-500 mt-6 mb-10">
+        <div className="p-3  border rounded-lg border-dashed border-orange-500 mt-6 mb-10">
           <div className="flex justify-between items-center">
             <img className="w-[100px]" src="https://img.etnews.com/photonews/2111/1469640_20211102084651_398_0001.jpg"></img>
-            <div className="mr-4">중고거래는 이제 당근페이로 해보세요!</div>
+            <div className="mr-4 flex items-center">당근하는 새로운 방법, 당근페이!<MdOutlineNavigateNext className="ml-2" size={"25px"}/></div>
           </div>
-          <div className="">
-            <button className="bg-orange-500 w-40 rounded-lg">충전</button>
-            <button className="bg-orange-500 w-40 rounded-lg">계좌송금</button>
+          <div className="flex justify-between items-center">
+            <button className="bg-gray-200 w-[350px] rounded-lg  h-10">충전</button>
+            <button className="bg-gray-200 w-[350px] rounded-lg  h-10">계좌송금</button>
           </div>
         </div>
 
-        <div>
+        <div className="border-b">
           <div className="text-2xl font-bold mt-5 pl-2">나의 거래</div>
           <div className="p-2 text-xl mt-5">
             <div className="flex items-center mb-7"><AiOutlineHeart className="mr-3" />관심목록</div>
