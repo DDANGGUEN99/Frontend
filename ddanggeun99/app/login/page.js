@@ -10,11 +10,10 @@ import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
 export default function Login() {
-
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
 
   const { email, password } = useLoginInput();
-  const router = useRouter()
+  const router = useRouter();
   // 로그인 버튼 눌렀을때 실행되는 함수
   const onSubmitLogin = async () => {
     const user = {
@@ -22,15 +21,12 @@ export default function Login() {
       password,
     };
     try {
-      const response = await axios.post(
-        `${serverUrl}/api/login`,
-        user
-      );
+      const response = await axios.post(`${serverUrl}/api/login`, user);
       console.log(response.data);
-      Cookies.set("accesstoken", response.data.accesstoken) 
-      Cookies.set("refreshtoken", response.data.refreshtoken) 
-      alert("로그인 완료!")
-      router.push("/main")
+      Cookies.set("accesstoken", response.data.accesstoken);
+      Cookies.set("refreshtoken", response.data.refreshtoken);
+      alert("로그인 완료!");
+      router.push("/main");
     } catch (error) {
       console.log(error.response.data.errorMessage);
     }

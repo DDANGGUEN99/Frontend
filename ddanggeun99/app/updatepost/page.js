@@ -4,9 +4,9 @@ import axios from "axios";
 import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
-import useCreatePostInput from "../hooks/useCreatePostInput";
+import useUpdatePostInput from "../hooks/useUpdatePostInput";
 
-export default function CreatePost() {
+export default function UpdatePost() {
   //cloudinary
   const cloudinaryUrl = useCloudinaryUrl();
   const [imageSelected, setImageSelected] = useState(null);
@@ -25,7 +25,6 @@ export default function CreatePost() {
       );
       console.log(response);
       setPublicId(response.data.public_id);
-      console.log(response.data.url)
       cloudinaryUrl.setCloudinaryUrl(response.data.url)
       return response.data.url;
     } catch (error) {
