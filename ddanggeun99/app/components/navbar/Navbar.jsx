@@ -15,7 +15,7 @@ function Navbar({ page }) {
     case "createpost":
       const { category_id, title, content, price, item_images } =
         useCreatePostInput();
-        
+
       const submitCreatePost = async () => {
         try {
           const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -25,25 +25,23 @@ function Navbar({ page }) {
             category_id: 1,
             title,
             content,
-            price:Number(price),
+            price: Number(price),
             item_images: "123",
           };
-          console.log(newPost)
-          console.log(Cookies.get("accesstoken"))
-          console.log(Cookies.get("refreshtoken"))
+          console.log(newPost);
+          console.log(Cookies.get("accesstoken"));
+          console.log(Cookies.get("refreshtoken"));
 
-          await axios.post(`${serverUrl}/api/items`, newPost,
-            {
-              headers: {
-                accesstoken: `Bearer ${Cookies.get("accesstoken")}` ,
-                refreshtoken: `Bearer ${Cookies.get("refreshtoken")}`,
-              }
-            }
-           );
+          const response = await axios.post(`${serverUrl}/api/items`, newPost, {
+            headers: {
+              accesstoken: `Bearer ${Cookies.get("accesstoken")}`,
+              refreshtoken: `Bearer ${Cookies.get("refreshtoken")}`,
+            },
+          });
           console.log(response);
           alert("게시글 작성 완료!");
         } catch (err) {
-          console.log(err)
+          console.log(err);
         }
       };
       return (
