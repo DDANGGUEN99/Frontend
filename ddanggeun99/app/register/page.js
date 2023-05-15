@@ -4,8 +4,28 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Input from "../components/inputs/Input";
 import useRegisterInput from "../hooks/useRegisterInput";
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function Register() {
+  // 화면 전환 애니메이션 설정
+  const animate = {
+    initial: {
+      transform: `translateY(50px)`,
+      opacity: 0,
+      transition: `transform 0.33s ease`
+    },
+    animate: {
+      transform: `translateY(0px)`,
+      opacity: 1,
+      transition: `transform 0.33s ease`
+    },
+    exit: {
+      transform: `translateY(50px)`,
+      opacity: 0,
+      transition: `transform 0.33s ease`
+    }
+  }
+
   const router = useRouter();
   // nickname, email, password, confirmPassword, locationId를 가져옴.
   const { nickname, email, password, confirmPassword, locationId } =
@@ -20,7 +40,7 @@ export default function Register() {
       email,
       password,
       location_id: locationId,
-      user_image:"123"
+      user_image: "123"
     };
     try {
       const response = await axios.post(
@@ -43,7 +63,7 @@ export default function Register() {
       try {
         const response = await axios.get(
           `${serverUrl}/api/checkEmail`,
-          {params: {email: email} }
+          { params: { email: email } }
         );
         return console.log(response);
       } catch (error) {
@@ -54,7 +74,7 @@ export default function Register() {
       try {
         const response = await axios.get(
           'http://localhost:3000/api/checkNickname',
-          {params: { nickname: nickname }}
+          { params: { nickname: nickname } }
         );
         return console.log(response);
       } catch (error) {
@@ -64,7 +84,9 @@ export default function Register() {
   };
 
   return (
-    <>
+    <motion.div key={router.route} initial={animate.initial}
+      animate={animate.animate}
+      exit={animate.exit}>
       <div className="flex flex-col h-full gap-10 justify-center ">
         <div className="flex justify-center items-center">
           <img width="300px" src="/images/carrot.png" />
@@ -107,7 +129,7 @@ export default function Register() {
           회원가입
         </div>
       </div>
-    </>
+    </motion.div>
   );
 }
 
@@ -122,9 +144,8 @@ function RegisterInput({ id, label, confirm, type, onSubmitConfirm }) {
         <div
           onClick={(e) => onSubmitConfirm(e, id)}
           className={`flex ml-4 py-0 bg-orange-400 text-white 
-          ${
-            confirm && "px-2"
-          } py-2 rounded-lg text-center items-center justify-center cursor-pointer`}
+          ${confirm && "px-2"
+            } py-2 rounded-lg text-center items-center justify-center cursor-pointer`}
         >
           {confirm}
         </div>
