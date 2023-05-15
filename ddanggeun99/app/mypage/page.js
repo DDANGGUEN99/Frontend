@@ -1,12 +1,17 @@
+"use client";
+
 import { BsList } from "react-icons/bs";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
 import Navbar from "../components/navbar/Navbar";
 import Tabbar from "../components/tabbar/Tabbar";
 import EditLink from "./EditLink";
 import { MdOutlineNavigateNext } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 
 function Mypage() {
+  const router = useRouter()
+
   return (
     <div className="h-full border-x">
       <Navbar page="mypage" />
@@ -31,9 +36,9 @@ function Mypage() {
         <div className="border-b">
           <div className="text-2xl font-bold mt-5 pl-2">나의 거래</div>
           <div className="p-2 text-xl mt-5">
-            <div className="flex items-center mb-7"><AiOutlineHeart className="mr-3" />관심목록</div>
-            <div className="flex items-center mb-7"><BsList className="mr-3" />판매내역</div>
-            <div className="flex items-center mb-7"><AiOutlineShopping className="mr-3" />구매내역</div>
+            <button onClick={()=>{router.push('/interest')}} className="flex items-center mb-7"><AiOutlineHeart className="mr-3" />관심목록</button>
+            <button className="flex items-center mb-7"><BsList className="mr-3" />판매내역</button>
+            <button className="flex items-center mb-7"><AiOutlineShopping className="mr-3" />구매내역</button>
           </div>
         </div>
       </div>
