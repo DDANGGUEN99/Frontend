@@ -2,7 +2,7 @@
 
 import useLoginInput from "@/app/hooks/useLoginInput";
 import useRegisterInput from "@/app/hooks/useRegisterInput";
-
+import { MdArrowRight } from "react-icons/md";
 export default function Input({
   id,
   disabled,
@@ -10,6 +10,7 @@ export default function Input({
   formatPrice,
   label,
   outline,
+  location,
 }) {
   const loginInput = useLoginInput();
   const registerInput = useRegisterInput();
@@ -70,6 +71,13 @@ export default function Input({
       `}
         >
           {label}
+          {id === "locationId" && location && (
+            <>
+              <div className="absolute  -top-8 left-80">
+                <MdArrowRight />
+              </div>
+            </>
+          )}
         </label>
       </div>
     </>

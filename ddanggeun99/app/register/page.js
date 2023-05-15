@@ -19,18 +19,15 @@ export default function Register() {
       nickname,
       email,
       password,
-      location_id: locationId,
-      user_image:"123"
+      location_id: 1,
+      user_image: "123",
     };
     try {
-      const response = await axios.post(
-        `${serverUrl}/api/signup`,
-        newUser
-      );
+      const response = await axios.post(`${serverUrl}/api/signup`, newUser);
       console.log(response);
-      router.push("/main");
+      router.push("/login");
     } catch (error) {
-      console.log(error);
+      console.log(response.data);
     }
   };
 
@@ -39,12 +36,10 @@ export default function Register() {
     const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
     if (id === "registerEmail") {
       // 이메일 중복 체크
-
       try {
-        const response = await axios.get(
-          `${serverUrl}/api/checkEmail`,
-          {params: {email: email} }
-        );
+        const response = await axios.get(`${serverUrl}/api/checkEmail`, {
+          params: { email: email },
+        });
         return console.log(response);
       } catch (error) {
         return console.log(error);
@@ -53,8 +48,8 @@ export default function Register() {
       // 닉네임 중복 체크
       try {
         const response = await axios.get(
-          'http://localhost:3000/api/checkNickname',
-          {params: { nickname: nickname }}
+          `${serverUrl}/api/checkNickname`,
+          { params: { nickname: nickname } }
         );
         return console.log(response);
       } catch (error) {
@@ -75,21 +70,18 @@ export default function Register() {
           label="이메일"
           confirm="중복 확인"
           onSubmitConfirm={onSubmitConfirm}
-          outline
         />
         <RegisterInput
           id="registerPassword"
           name="password"
           label="비밀번호"
           type="password"
-          outline
         />
         <RegisterInput
           id="registerConfirmPassword"
           name="confirmpassword"
           label="비밀번호 확인"
           type="password"
-          outline
         />
         <RegisterInput
           id="registerNickname"
@@ -97,9 +89,8 @@ export default function Register() {
           label="닉네임"
           confirm="중복 확인"
           onSubmitConfirm={onSubmitConfirm}
-          outline
         />
-        <RegisterInput id="locationId" label="거주지" outline />
+        <RegisterInput id="locationId" label="거주지" />
         <div
           onClick={onSubmitRegister}
           className=" cursor-pointer mb-10 text-center self-center w-4/5 max-w-screen-md bg-orange-400 text-white text-2xl rounded-lg py-5 "
@@ -118,7 +109,7 @@ function RegisterInput({ id, label, confirm, type, onSubmitConfirm }) {
         <div className="cursor-default pl-2 w-28 flex justify-start items-center">
           {label}
         </div>
-        <Input id={id} label={label} type={type} outline />
+        <Input id={id} label={label} type={type} outline location={true} />
         <div
           onClick={(e) => onSubmitConfirm(e, id)}
           className={`flex ml-4 py-0 bg-orange-400 text-white 
