@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={font.className} >
-        <div className="flex flex-col border-x-2 justify-between  max-w-screen-md mx-auto h-full">
+        <div className="flex flex-col justify-between max-w-screen-md mx-auto h-full">
           {children}
         </div>
       </body>

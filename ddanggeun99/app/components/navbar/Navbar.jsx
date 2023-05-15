@@ -1,76 +1,36 @@
-"use client";
+"use client"
 
-import useCreatePostInput from "@/app/hooks/useCreatePostInput";
-import { useRouter } from "next/navigation";
-import React from "react";
-import { ImCancelCircle } from "react-icons/im";
-import { RiArrowLeftSLine } from "react-icons/ri";
-import { BiHomeAlt } from "react-icons/bi";
-import { FiShare } from "react-icons/fi";
+
+import React from 'react'
+import { ImCancelCircle } from "react-icons/im"
+import { AiOutlineSearch } from "react-icons/ai"
+import { BsList, BsBell } from "react-icons/bs"
+import { RxCaretDown } from "react-icons/rx"
+
 
 function Navbar({ page }) {
-  const router = useRouter();
-
   switch (page) {
-    // createpost에 들어가는 Navbar
     case "createpost":
-      // 게시글 등록하는 함수
-      const { title, content, price, category_id } = useCreatePostInput();
-      const onSubmitPost = async () => {
-        try {
-          const newPost = {
-            title,
-            content,
-            price,
-            category_id,
-            location_id: 0,
-          };
-          await axios.post(
-            `${process.env.REACT_APP_SERVER_URL}/api/items`,
-            { newPost },
-            {}
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      };
       return (
-        <div className="cursor-default flex items-center justify-between px-4 fixed w-full rounded-b-lg pt-1 bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16">
-          <div onClick={() => router.push("/main")}>
-            <ImCancelCircle size={28} />
-          </div>
+        <div className='cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center'>
+          <div> <ImCancelCircle size={28} /> </div>
           <div>내 물건 팔기</div>
-          <div onClick={onSubmitPost} className="text-orange-400 text-xl">
-            완료
+          <div className='text-orange-400 text-xl'>완료</div>
+        </div>
+      )
+    case "main":
+      return (
+        <div className='cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center'>
+          <div className="text-[20px] flex items-center ml-2">서울<RxCaretDown size={"30px"}/></div>
+          <div className="flex items-center">
+            <button className="mr-4"><AiOutlineSearch size={"25px"}/></button>
+            <button className="mr-4"><BsList size={"25px"}/></button>
+            <button><BsBell size={"22px"}/></button>
           </div>
         </div>
-      );
-
-    case "detail":
-      return (
-        <div className="cursor-default flex items-center justify-between px-4 fixed w-full rounded-b-lg pt-1 bg-transparent z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 ">
-          <div className="flex gap-8">
-            <div onClick={() => router.back()}>
-              <RiArrowLeftSLine />
-            </div>
-            <div onClick={() => router.push("/main")}>
-              <BiHomeAlt />
-            </div>
-          </div>
-          <div>
-            <div>
-              <FiShare />
-            </div>
-          </div>
-        </div>
-      );
-
-    // mypage에 들어가는 Navbar
-    case "mypage":
-      return (
-        <div className="cursor-default  self-center flex items-center justify-between px-4 fixed w-full rounded-b-lg pt-1 bg-orange-400 z-10 shodow-sm text-3xl text-center text-white max-w-screen-md mx-auto h-16 border-b-2"></div>
-      );
+      )
+      break;
   }
 }
 
-export default Navbar;
+export default Navbar
