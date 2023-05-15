@@ -2,14 +2,27 @@
 
 import React from 'react'
 import Card from '../components/card/Card'
-import Tabbar from '../components/tabbar/Tabbar'
 import Navbar from '../components/navbar/Navbar'
+import Animate from '../components/animate';
 
 
 function orderHistory() {
-
+    const animate = {
+        initial: {
+          opacity: 0,
+        },
+        animate: {
+          opacity: 1,
+          transition: {
+            duration: 0.5,
+          },
+        },
+        exit: {
+          opacity: 0,
+        },
+      }
     return (
-        <>
+        <Animate animate={animate}>
             <Navbar page="orderHistory" />
 
             {/* 카드 반복 부분 */}
@@ -24,7 +37,7 @@ function orderHistory() {
                 <Card />
                 <Card />
             </div>
-        </>
+        </Animate>
     )
 }
 

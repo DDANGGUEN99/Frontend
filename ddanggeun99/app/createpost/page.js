@@ -5,26 +5,24 @@ import Navbar from "../components/navbar/Navbar";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 import { motion } from "framer-motion";
 import { useRouter } from 'next/navigation';
+import Animate from "../components/animate";
 
 export default function CreatePost() {
   const animate = {
     initial: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
     },
     animate: {
-      transform: `translateY(0px)`,
       opacity: 1,
-      transition: `transform 0.33s ease`
+      transition: {
+        duration: 0.5,
+      },
     },
     exit: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
-    }
+    },
   }
-  
+
   const router = useRouter()
 
   const createPostInput = useCreatePostInput();
@@ -47,9 +45,7 @@ export default function CreatePost() {
   };
   return (
 
-    <motion.div key={router.route} initial={animate.initial}
-      animate={animate.animate}
-      exit={animate.exit} >
+    <Animate animate={animate}>
       <Navbar page="createpost" />
       <div className="pt-16">
         <div className="flex justify-between px-8 border-b-2 py-8">
@@ -91,7 +87,7 @@ export default function CreatePost() {
           />
         </div>
       </div>
-    </motion.div>
+    </Animate>
 
   );
 }

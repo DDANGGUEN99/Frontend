@@ -4,31 +4,27 @@ import { MdNavigateBefore } from "react-icons/md";
 import BeforeLink from './BeforeLink';
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Animate from '../components/animate';
 
 function edit() {
     const animate = {
         initial: {
-            transform: `translateY(50px)`,
             opacity: 0,
-            transition: `transform 0.33s ease`
         },
         animate: {
-            transform: `translateY(0px)`,
             opacity: 1,
-            transition: `transform 0.33s ease`
+            transition: {
+                duration: 0.5,
+            },
         },
         exit: {
-            transform: `translateY(50px)`,
             opacity: 0,
-            transition: `transform 0.33s ease`
-        }
+        },
     }
 
     const router = useRouter();
     return (
-        <motion.div key={router.route} initial={animate.initial}
-            animate={animate.animate}
-            exit={animate.exit}>
+        <Animate animate={animate}>
             <div className='h-full border-x '>
                 {/* header */}
                 <div className='flex items-center border-b p-2'>
@@ -47,7 +43,7 @@ function edit() {
                     <input className='w-80 h-10 border-orange-500 rounded-md pl-2 border-2' placeholder='닉네임을 입력해주세요.'></input>
                 </div>
             </div>
-        </motion.div>
+        </Animate>
     )
 }
 

@@ -8,6 +8,7 @@ import EditLink from "./EditLink";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Animate from "../components/animate";
 
 
 function Mypage() {
@@ -15,27 +16,22 @@ function Mypage() {
 
   const animate = {
     initial: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
     },
     animate: {
-      transform: `translateY(0px)`,
       opacity: 1,
-      transition: `transform 0.33s ease`
+      transition: {
+        duration: 0.5,
+      },
     },
     exit: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
-    }
+    },
   }
 
 
   return (
-    <motion.div key={router.route} initial={animate.initial}
-      animate={animate.animate}
-      exit={animate.exit} >
+    <Animate animate={animate}>
       <div className="h-full border-x">
         <Navbar page="mypage" />
         <div className="p-3">
@@ -67,7 +63,7 @@ function Mypage() {
         </div>
         <Tabbar />
       </div>
-    </motion.div>
+    </Animate>
   )
 }
 

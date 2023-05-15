@@ -6,34 +6,30 @@ import Tabbar from '../components/tabbar/Tabbar'
 import Navbar from '../components/navbar/Navbar'
 import { useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
+import Animate from '../components/animate';
 
 
 function Main() {
     const animate = {
         initial: {
-            transform: `translateY(50px)`,
             opacity: 0,
-            transition: `transform 0.33s ease`
-        },
-        animate: {
-            transform: `translateY(0px)`,
+          },
+          animate: {
             opacity: 1,
-            transition: `transform 0.33s ease`
-        },
-        exit: {
-            transform: `translateY(50px)`,
+            transition: {
+              duration: 0.5,
+            },
+          },
+          exit: {
             opacity: 0,
-            transition: `transform 0.33s ease`
-        }
+          },
     }
 
     const router = useRouter()
 
     return (
 
-        <motion.div key={router.route} initial={animate.initial}
-            animate={animate.animate}
-            exit={animate.exit} >
+        <Animate animate={animate}>
             <Navbar page="main" />
 
             {/* 카드 반복 부분 */}
@@ -56,7 +52,7 @@ function Main() {
 
 
             <Tabbar page="main" />
-        </motion.div>
+        </Animate>
 
     )
 }

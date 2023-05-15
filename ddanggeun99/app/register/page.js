@@ -5,25 +5,23 @@ import { useRouter } from "next/navigation";
 import Input from "../components/inputs/Input";
 import useRegisterInput from "../hooks/useRegisterInput";
 import { motion, AnimatePresence } from "framer-motion"
+import Animate from "../components/animate";
 
 export default function Register() {
   // 화면 전환 애니메이션 설정
   const animate = {
     initial: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
     },
     animate: {
-      transform: `translateY(0px)`,
       opacity: 1,
-      transition: `transform 0.33s ease`
+      transition: {
+        duration: 0.5,
+      },
     },
     exit: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
-    }
+    },
   }
 
   const router = useRouter();
@@ -84,9 +82,7 @@ export default function Register() {
   };
 
   return (
-    <motion.div key={router.route} initial={animate.initial}
-      animate={animate.animate}
-      exit={animate.exit}>
+    <Animate animate={animate}>
       <div className="flex flex-col h-full gap-10 justify-center ">
         <div className="flex justify-center items-center">
           <img width="300px" src="/images/carrot.png" />
@@ -129,7 +125,7 @@ export default function Register() {
           회원가입
         </div>
       </div>
-    </motion.div>
+    </Animate>
   );
 }
 

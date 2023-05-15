@@ -2,33 +2,28 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-
+import Animate from "./components/animate";
 
 export default function Home() {
   // 화면 전환 애니메이션 설정
   const animate = {
     initial: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
     },
     animate: {
-      transform: `translateY(0px)`,
       opacity: 1,
-      transition: `transform 0.33s ease`
+      transition: {
+        duration: 0.5,
+      },
     },
     exit: {
-      transform: `translateY(50px)`,
       opacity: 0,
-      transition: `transform 0.33s ease`
-    }
+    },
   }
 
   const router = useRouter();
   return (
-    <motion.div key={router.route} initial={animate.initial}
-      animate={animate.animate}
-      exit={animate.exit} >
+    <Animate animate={animate}>
       <div className="flex flex-col h-full gap-10 justify-center ">
         <div className="flex flex-col items-center pt-12">
           <div className="text-6xl pb-10">당신 근처의 당근마켓</div>
@@ -57,6 +52,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </motion.div>
+    </Animate>
   );
 }

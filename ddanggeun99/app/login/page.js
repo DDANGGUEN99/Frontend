@@ -7,6 +7,7 @@ import useLoginInput from "../hooks/useLoginInput";
 import axios from "axios";
 import Header from "../components/header/Header";
 import { useRouter } from "next/navigation";
+import Animate from '../components/animate';
 
 export default function Login() {
 
@@ -14,6 +15,23 @@ export default function Login() {
 
   const { email, password } = useLoginInput();
   const router = useRouter()
+
+  //화면 전환 애니메이션
+  const animate = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  }
+
   // 로그인 버튼 눌렀을때 실행되는 함수
   const onSubmitLogin = async () => {
     const user = {
@@ -33,7 +51,7 @@ export default function Login() {
   };
 
   return (
-    <>
+    <Animate animate={animate}>
       <div className="h-full flex flex-col justify-center gap-8 ">
         <div className="flex justify-center items-center">
           <img width="300px" src="/images/carrot.png" />
@@ -64,7 +82,7 @@ export default function Login() {
           로그인
         </div>
       </div>
-    </>
+    </Animate>
   );
 }
 
@@ -76,9 +94,8 @@ function RegisterInput({ id, label, confirm, type }) {
       </div>
       <Input id={id} label={label} type={type} outline />
       <div
-        className={`flex ml-4 py-0 bg-orange-400 text-white ${
-          confirm && "px-2"
-        } rounded-lg text-center items-center justify-center cursor-pointer`}
+        className={`flex ml-4 py-0 bg-orange-400 text-white ${confirm && "px-2"
+          } rounded-lg text-center items-center justify-center cursor-pointer`}
       >
         {confirm}
       </div>
