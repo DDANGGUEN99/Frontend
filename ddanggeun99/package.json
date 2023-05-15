@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && next export",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build && next export && aws s3 sync out/ s3://whats-your-favorite-music"
+    "deploy": "next build && aws s3 sync out/ s3://whats-your-favorite-music"
     },
   "dependencies": {
     "autoprefixer": "10.4.14",

@@ -4,6 +4,9 @@ import useCreatePostInput from "@/app/hooks/useCreatePostInput";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { ImCancelCircle } from "react-icons/im";
+import { RiArrowLeftSLine } from "react-icons/ri";
+import { BiHomeAlt } from "react-icons/bi";
+import { FiShare } from "react-icons/fi";
 
 function Navbar({ page }) {
   const router = useRouter();
@@ -24,7 +27,8 @@ function Navbar({ page }) {
           };
           await axios.post(
             `${process.env.REACT_APP_SERVER_URL}/api/items`,
-            { newPost }, {}
+            { newPost },
+            {}
           );
         } catch (error) {
           console.log(error);
@@ -41,10 +45,30 @@ function Navbar({ page }) {
           </div>
         </div>
       );
+
+    case "detail":
+      return (
+        <div className="cursor-default flex items-center justify-between px-4 fixed w-full rounded-b-lg pt-1 bg-transparent z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 ">
+          <div className="flex gap-8">
+            <div onClick={() => router.back()}>
+              <RiArrowLeftSLine />
+            </div>
+            <div onClick={() => router.push("/main")}>
+              <BiHomeAlt />
+            </div>
+          </div>
+          <div>
+            <div>
+              <FiShare />
+            </div>
+          </div>
+        </div>
+      );
+
     // mypage에 들어가는 Navbar
     case "mypage":
       return (
-        <div className="cursor-default flex items-center justify-between px-4 fixed w-full rounded-b-lg pt-1 bg-orange-400 z-10 shodow-sm text-3xl text-center text-white max-w-screen-md mx-auto h-16 border-b-2"></div>
+        <div className="cursor-default  self-center flex items-center justify-between px-4 fixed w-full rounded-b-lg pt-1 bg-orange-400 z-10 shodow-sm text-3xl text-center text-white max-w-screen-md mx-auto h-16 border-b-2"></div>
       );
   }
 }
