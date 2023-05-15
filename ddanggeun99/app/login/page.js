@@ -26,6 +26,7 @@ export default function Login() {
         user
       );
       console.log(response);
+      router.push('/main')
     } catch (error) {
       console.log(error);
     }
