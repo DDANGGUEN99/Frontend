@@ -7,12 +7,14 @@ import { BsList, BsBell } from "react-icons/bs";
 import { RxCaretDown } from "react-icons/rx";
 import Cookies from "js-cookie";
 
-import useCreatePostInput from "@/app/hooks/useCreatePostInput";
 import axios from "axios";
+import useCloudinaryUrl from "../../hooks/useCloudinaryUrl";
+import useCreatePostInput from "../../hooks/useCreatePostInput";
 
 function Navbar({ page }) {
   switch (page) {
     case "createpost":
+      const cloudinaryUrl = useCloudinaryUrl
       const { category_id, title, content, price, item_images } =
         useCreatePostInput();
 
@@ -26,7 +28,7 @@ function Navbar({ page }) {
             title,
             content,
             price: Number(price),
-            item_images: "123",
+            item_images: cloudinaryUrl.cloudinaryUrl,
           };
           console.log(newPost);
           console.log(Cookies.get("accesstoken"));
