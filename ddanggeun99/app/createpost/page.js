@@ -1,10 +1,46 @@
 "use client";
 
-
+import axios from "axios";
+import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
+import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 
 export default function CreatePost() {
+  //cloudinary
+  const cloudinaryUrl = useCloudinaryUrl();
+  const [imageSelected, setImageSelected] = useState(null);
+  const [publicId, setPublicId] = useState(null);
+
+  const uploadImage = async (file) => {
+    const formData = new FormData();
+    console.log(file);
+    formData.append("file", file);
+    formData.append("upload_preset", "tuwroqix");
+  
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/dsav9fenu/image/upload",
+        formData
+      );
+      console.log(response);
+      setPublicId(response.data.public_id);
+      cloudinaryUrl.setCloudinaryUrl(response.data.url)
+      return response.data.url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleImageChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setImageSelected(selectedFile);
+    uploadImage(selectedFile);
+  };
+
+
+
+
   const createPostInput = useCreatePostInput();
 
   const handleChangeInput = (e) => {
@@ -27,11 +63,25 @@ export default function CreatePost() {
     <>
       <Navbar page="createpost" />
       <div className="pt-16">
-        <div className="flex justify-between px-8 border-b-2 py-8">
-          <div className="h-[100px] w-[100px] border-2">사진1</div>
-          <div className="h-[100px] w-[100px] border-2">사진2</div>
-          <div className="h-[100px] w-[100px] border-2">사진3</div>
-          <div className="h-[100px] w-[100px] border-2">사진4</div>
+        <div className="flex flex-col items-center justify-between px-8 border-b-2 py-8">
+          <div className="flex flex-col justify-center items-center">
+            <img
+              className="w-[200px] h-[200px] "
+              src={cloudinaryUrl.cloudinaryUrl}
+            />
+            <div> 이미지를 등록해주세요!</div>
+          </div>
+          <input
+            onChange={handleImageChange}
+            type="file"
+            class="block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-violet-50 file:text-violet-700
+                    hover:file:bg-violet-100
+                  "
+          />
         </div>
         <div className="border-b-2 pt-6 pb-3 pl-2">
           <input
