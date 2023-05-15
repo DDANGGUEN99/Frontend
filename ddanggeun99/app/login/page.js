@@ -7,6 +7,7 @@ import useLoginInput from "../hooks/useLoginInput";
 import axios from "axios";
 import Header from "../components/header/Header";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 import Animate from '../components/animate';
 
 export default function Login() {
@@ -43,10 +44,13 @@ export default function Login() {
         `${serverUrl}/api/login`,
         user
       );
-      console.log(response);
-      router.push('/main')
+      console.log(response.data);
+      Cookies.set("accesstoken", response.data.accesstoken) 
+      Cookies.set("refreshtoken", response.data.refreshtoken) 
+      alert("로그인 완료!")
+      router.push("/main")
     } catch (error) {
-      console.log(error);
+      console.log(error.response.data.errorMessage);
     }
   };
 
