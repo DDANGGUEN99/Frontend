@@ -24,7 +24,7 @@ function Main() {
 
             {/* 글쓰기 버튼 */}
             <div className='sticky bottom-24 self-end mr-6'>
-                <div className="cursor-pointer text-center w-32 bg-orange-400 text-white text-xl rounded-2xl p-4 ">+ 글쓰기</div>
+                <div className="cursor-pointer text-center w-32 bg-orange-400 text-white text-xl rounded-full p-4 ">+ 글쓰기</div>
             </div>
 
 
