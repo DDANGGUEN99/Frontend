@@ -37,8 +37,8 @@ function Mypage() {
           <div className="text-2xl font-bold mt-5 pl-2">나의 거래</div>
           <div className="p-2 text-xl mt-5">
             <button onClick={()=>{router.push('/interest')}} className="flex items-center mb-7"><AiOutlineHeart className="mr-3" />관심목록</button>
-            <button className="flex items-center mb-7"><BsList className="mr-3" />판매내역</button>
-            <button className="flex items-center mb-7"><AiOutlineShopping className="mr-3" />구매내역</button>
+            <button onClick={()=>{router.push('/salesHistory')}} className="flex items-center mb-7"><BsList className="mr-3" />판매내역</button>
+            <button onClick={()=>{router.push('/orderHistory')}} className="flex items-center mb-7"><AiOutlineShopping className="mr-3" />구매내역</button>
           </div>
         </div>
       </div>
