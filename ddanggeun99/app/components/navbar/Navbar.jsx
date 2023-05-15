@@ -6,6 +6,9 @@ import { ImCancelCircle } from "react-icons/im"
 import { AiOutlineSearch } from "react-icons/ai"
 import { BsList, BsBell } from "react-icons/bs"
 import { RxCaretDown } from "react-icons/rx"
+import { MdOutlineNavigateBefore } from "react-icons/md"
+import { useRouter } from 'next/navigation'
+
 
 
 function Navbar({ page }) {
@@ -21,11 +24,21 @@ function Navbar({ page }) {
     case "main":
       return (
         <div className='cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center'>
-          <div className="text-[20px] flex items-center ml-2">서울<RxCaretDown size={"30px"}/></div>
+          <div className="text-[20px] flex items-center ml-2">서울<RxCaretDown size={"30px"} /></div>
           <div className="flex items-center">
-            <button className="mr-4"><AiOutlineSearch size={"25px"}/></button>
-            <button className="mr-4"><BsList size={"25px"}/></button>
-            <button><BsBell size={"22px"}/></button>
+            <button className="mr-4"><AiOutlineSearch size={"25px"} /></button>
+            <button className="mr-4"><BsList size={"25px"} /></button>
+            <button><BsBell size={"22px"} /></button>
+          </div>
+        </div>
+      )
+    case "interest":
+      const router = useRouter()
+      return (
+        <div class="cursor-default flex items-center px-4 fixed w-full bg-white z-10 shadow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
+          <button onClick={()=>{router.push('/mypage')}}><MdOutlineNavigateBefore size={"35px"} /></button>
+          <div class="flex items-center justify-center w-full">
+            <div class="text-2xl ml-2">관심목록</div>
           </div>
         </div>
       )
