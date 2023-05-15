@@ -28,7 +28,7 @@ export default function Register() {
         newUser
       );
       console.log(response);
-      router.push("/main");
+      router.push("/login");
     } catch (error) {
       console.log(error);
     }
