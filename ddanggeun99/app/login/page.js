@@ -6,10 +6,14 @@ import { FcGoogle } from "react-icons/fc";
 import useLoginInput from "../hooks/useLoginInput";
 import axios from "axios";
 import Header from "../components/header/Header";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const { email, password } = useLoginInput();
 
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+
+  const { email, password } = useLoginInput();
+  const router = useRouter()
   // 로그인 버튼 눌렀을때 실행되는 함수
   const onSubmitLogin = async () => {
     const user = {
@@ -18,19 +22,19 @@ export default function Login() {
     };
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_SERVER_URL}/api/signup`,
+        `${serverUrl}/api/login`,
         user
       );
       console.log(response);
     } catch (error) {
-      console.log(error.errorMessage);
+      console.log(error);
     }
   };
 
   return (
     <>
       <div className="h-full flex flex-col justify-center gap-8 ">
-        <div className="flex justify-center items-center pt-20 pb-10">
+        <div className="flex justify-center items-center">
           <img width="300px" src="/images/carrot.png" />
         </div>
         <div className="hidden md:block">

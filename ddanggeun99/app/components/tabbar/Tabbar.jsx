@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 function Tabbar() {
   const router = useRouter();
   return (
-    <div className=" w-full fixed border-t-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-5xl text-center text-black flex justify-around  max-w-screen-md mx-auto">
+    <div className=" w-full fixed border-x-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-5xl text-center text-black flex justify-around  max-w-screen-md mx-auto">
       <div
         onClick={() => router.push("/main")}
         className="flex flex-col justify-center items-center cursor-pointer"
