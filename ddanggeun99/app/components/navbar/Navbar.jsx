@@ -25,7 +25,7 @@ function Navbar({ page }) {
         try {
           const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
           const newPost = {
-            category_id: 1,
+            category_id: category_id,
             title,
             content,
             price: Number(price),
@@ -47,11 +47,14 @@ function Navbar({ page }) {
       };
       return (
         <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
-          <div>
+          <div
+          onClick={() => router.push("/main")}
+          className="cursor-pointer"
+          >
             <ImCancelCircle size={28} />
           </div>
           <div>내 물건 팔기</div>
-          <div onClick={submitCreatePost} className="text-orange-400 text-xl">
+          <div onClick={submitCreatePost} className="cursor-pointer text-orange-400 text-xl">
             완료
           </div>
         </div>
@@ -80,7 +83,7 @@ function Navbar({ page }) {
       return (
         <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
           <div className="text-[20px] flex justify-center items-center ml-2 gap-6">
-            <RxCaretLeft size={"30px"} qqqqX/>
+            <RxCaretLeft size={"30px"}/>
             <BiHomeAlt size={"30px"} />
           </div>
           <div className="flex items-center  gap-6">
