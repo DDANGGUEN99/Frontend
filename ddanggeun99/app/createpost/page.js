@@ -7,7 +7,6 @@ import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 import { useRouter } from 'next/navigation';
 import Animate from "../components/animate";
-
 export default function CreatePost() {
   const animate = {
     initial: {
@@ -113,7 +112,7 @@ export default function CreatePost() {
           <input
             name="price"
             onChange={handleChangeInput}
-            value={createPostInput.price}
+            value={createPostInput.stringPrice}
             placeholder="W 가격 (선택사항)"
           />
         </div>

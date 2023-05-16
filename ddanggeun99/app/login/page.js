@@ -8,7 +8,7 @@ import axios from "axios";
 import Header from "../components/header/Header";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import Animate from '../components/animate';
+import Animate from '../components/Animate';
 
 export default function Login() {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;

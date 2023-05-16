@@ -17,7 +17,6 @@ function Navbar({ page }) {
     case "createpost":
       const router = useRouter();
       const cloudinaryUrl = useCloudinaryUrl();
-      console.log(cloudinaryUrl)
       const { category_id, title, content, price } =
         useCreatePostInput();
 
