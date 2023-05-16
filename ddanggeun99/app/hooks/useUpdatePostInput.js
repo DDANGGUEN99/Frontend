@@ -5,7 +5,7 @@ import { create } from "zustand";
 
 
 const useUpdatePostInput = create((set) => ({
-  category_id: 2,
+  category_id: "",
   title: "",
   content: "",
   price: "",
