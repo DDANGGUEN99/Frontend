@@ -25,6 +25,7 @@ function Main() {
     },
   }
 
+
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const [items, setItems] = useState([]);
 
@@ -63,9 +64,11 @@ function Main() {
       {/* 카드 반복 부분 */}
       <div className="mt-16">
         {items.map((item) => (
-          <div key={item.item_id} className="flex items-center border-b p-[10px] border-x" >
+          <div 
+          onClick={() => router.push(`detail/${item.item_id}`)}
+          key={item.item_id} className="flex items-center border-b p-[10px] border-x" >
             <div className="w-[130px] ml-[10px]" >
-              <img src={item.item_images}
+              <img src={item.thumbnail_url}
                 style={{ borderRadius: "10px" }} />
             </div>
             <div className="ml-[10px] mb-[10px]">
