@@ -4,7 +4,7 @@ import { MdNavigateBefore } from "react-icons/md";
 import BeforeLink from './BeforeLink';
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Animate from '../components/animate';
+import Animate from '../components/Animate';
 
 function edit() {
     const animate = {

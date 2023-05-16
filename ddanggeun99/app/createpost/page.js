@@ -7,7 +7,6 @@ import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 import { useRouter } from 'next/navigation';
 import Animate from "../components/animate";
-
 export default function CreatePost() {
   const animate = {
     initial: {
