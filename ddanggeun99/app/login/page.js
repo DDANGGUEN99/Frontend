@@ -17,6 +17,27 @@ export default function Login() {
   const { email, password } = useLoginInput();
   const router = useRouter()
 
+  // 로그인 버튼 눌렀을때 실행되는 함수
+  const onSubmitLogin = async () => {
+    const user = {
+      email,
+      password,
+    };
+    try {
+      const response = await axios.post(
+        `${serverUrl}/api/login`,
+        user
+      );
+      console.log(response.data);
+      Cookies.set("accesstoken", response.data.accesstoken)
+      Cookies.set("refreshtoken", response.data.refreshtoken)
+      alert("로그인 완료!")
+      router.push("/main")
+    } catch (error) {
+      console.log(error.response.data.errorMessage);
+    }
+  };
+
   //화면 전환 애니메이션
   const animate = {
     initial: {
@@ -32,27 +53,6 @@ export default function Login() {
       opacity: 0,
     },
   }
-
-  // 로그인 버튼 눌렀을때 실행되는 함수
-  const onSubmitLogin = async () => {
-    const user = {
-      email,
-      password,
-    };
-    try {
-      const response = await axios.post(
-        `${serverUrl}/api/login`,
-        user
-      );
-      console.log(response.data);
-      Cookies.set("accesstoken", response.data.accesstoken) 
-      Cookies.set("refreshtoken", response.data.refreshtoken) 
-      alert("로그인 완료!")
-      router.push("/main")
-    } catch (error) {
-      console.log(error.response.data.errorMessage);
-    }
-  };
 
   return (
     <Animate animate={animate}>
