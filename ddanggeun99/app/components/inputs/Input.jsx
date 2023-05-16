@@ -1,9 +1,7 @@
 "use client";
 
-import { MdArrowRight, MdArrowDropDown } from "react-icons/md";
 import useLoginInput from "../../hooks/useLoginInput";
 import useRegisterInput from "../../hooks/useRegisterInput";
-import useLocationModal from "../../hooks/useLocationModal";
 
 export default function Input({
   id,
@@ -12,9 +10,7 @@ export default function Input({
   formatPrice,
   label,
   outline,
-  location,
 }) {
-  const locationModal = useLocationModal();
   const loginInput = useLoginInput();
   const registerInput = useRegisterInput();
   const handleChangeInput = (e) => {
