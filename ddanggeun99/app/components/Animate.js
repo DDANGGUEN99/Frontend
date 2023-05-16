@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 
 const Animate = ({ animate, children }) => {
+  
   return (
     <motion.div
       initial={animate.initial}
