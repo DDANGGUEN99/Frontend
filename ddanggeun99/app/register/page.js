@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Input from "../components/inputs/Input";
 import useRegisterInput from "../hooks/useRegisterInput";
 import { motion, AnimatePresence } from "framer-motion"
-import Animate from "../components/animate";
+import Animate from "../components/Animate";
 
 export default function Register() {
   // 화면 전환 애니메이션 설정
