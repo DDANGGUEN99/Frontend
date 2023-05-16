@@ -199,14 +199,6 @@ export default function CreatePost() {
             placeholder="게시글 내용을 작성해주세요."
           />
         </div>
-        <div className="border-b-2 h-40 py-3 pl-2">
-          <input
-            name="category_id"
-            onChange={handleChangeInput}
-            value={createPostInput.category_id}
-            placeholder="상품의 카테고리를 선택해주세요."
-          />
-        </div>
       </div>
     </Animate>
   );
