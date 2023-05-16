@@ -3,7 +3,7 @@
 import React from 'react'
 import Card from '../components/card/Card'
 import Navbar from '../components/navbar/Navbar'
-import Animate from '../components/animate';
+import Animate from '../components/Animate';
 
 
 function orderHistory() {

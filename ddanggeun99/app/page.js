@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Animate from "./components/animate";
+import Animate from "./components/Animate";
 
 export default function Home() {
   // 화면 전환 애니메이션 설정
