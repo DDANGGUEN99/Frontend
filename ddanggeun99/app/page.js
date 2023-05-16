@@ -1,12 +1,29 @@
 "use client"
 
 import { useRouter } from "next/navigation";
-
+import { motion } from "framer-motion";
+import Animate from "./components/animate";
 
 export default function Home() {
+  // 화면 전환 애니메이션 설정
+  const animate = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  }
+
   const router = useRouter();
   return (
-    <>
+    <Animate animate={animate}>
       <div className="flex flex-col h-full gap-10 justify-center ">
         <div className="flex flex-col items-center pt-12">
           <div className="text-6xl pb-10">당신 근처의 당근마켓</div>
@@ -35,6 +52,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </>
+    </Animate>
   );
 }

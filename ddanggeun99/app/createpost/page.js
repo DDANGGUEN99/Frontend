@@ -5,8 +5,25 @@ import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
+import { useRouter } from 'next/navigation';
+import Animate from "../components/animate";
 
 export default function CreatePost() {
+  const animate = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  }
+
   //cloudinary
   const cloudinaryUrl = useCloudinaryUrl();
   const [imageSelected, setImageSelected] = useState(null);
@@ -17,7 +34,7 @@ export default function CreatePost() {
     console.log(file);
     formData.append("file", file);
     formData.append("upload_preset", "tuwroqix");
-  
+
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/dsav9fenu/image/upload",
@@ -39,8 +56,7 @@ export default function CreatePost() {
     uploadImage(selectedFile);
   };
 
-
-
+  const router = useRouter()
 
   const createPostInput = useCreatePostInput();
 
@@ -61,7 +77,8 @@ export default function CreatePost() {
     }
   };
   return (
-    <>
+
+    <Animate animate={animate}>
       <Navbar page="createpost" />
       <div className="pt-16">
         <div className="flex flex-col items-center justify-between px-8 border-b-2 py-8">
@@ -75,7 +92,7 @@ export default function CreatePost() {
           <input
             onChange={handleImageChange}
             type="file"
-            class="block w-full text-sm text-slate-500
+            className="block w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
                     file:text-sm file:font-semibold
@@ -117,6 +134,7 @@ export default function CreatePost() {
           />
         </div>
       </div>
-    </>
+    </Animate>
+
   );
 }

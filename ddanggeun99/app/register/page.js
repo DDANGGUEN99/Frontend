@@ -4,8 +4,26 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Input from "../components/inputs/Input";
 import useRegisterInput from "../hooks/useRegisterInput";
+import { motion, AnimatePresence } from "framer-motion"
+import Animate from "../components/animate";
 
 export default function Register() {
+  // 화면 전환 애니메이션 설정
+  const animate = {
+    initial: {
+      opacity: 0,
+    },
+    animate: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    exit: {
+      opacity: 0,
+    },
+  }
+
   const router = useRouter();
   // nickname, email, password, confirmPassword, locationId를 가져옴.
   const { nickname, email, password, confirmPassword, locationId } =
@@ -59,7 +77,7 @@ export default function Register() {
   };
 
   return (
-    <>
+    <Animate animate={animate}>
       <div className="flex flex-col h-full gap-10 justify-center ">
         <div className="flex justify-center items-center">
           <img width="300px" src="/images/carrot.png" />
@@ -98,7 +116,7 @@ export default function Register() {
           회원가입
         </div>
       </div>
-    </>
+    </Animate>
   );
 }
 
@@ -113,9 +131,8 @@ function RegisterInput({ id, label, confirm, type, onSubmitConfirm }) {
         <div
           onClick={(e) => onSubmitConfirm(e, id)}
           className={`flex ml-4 py-0 bg-orange-400 text-white 
-          ${
-            confirm && "px-2"
-          } py-2 rounded-lg text-center items-center justify-center cursor-pointer`}
+          ${confirm && "px-2"
+            } py-2 rounded-lg text-center items-center justify-center cursor-pointer`}
         >
           {confirm}
         </div>
