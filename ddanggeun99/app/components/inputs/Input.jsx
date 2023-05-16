@@ -75,26 +75,7 @@ export default function Input({
         >
           {label}
         </label>
-        {id === "locationId" && location && !locationModal.isOpen && (
-          <>
-            <div
-              onClick={() => locationModal.onOpen()}
-              className="absolute right-4 top-5"
-            >
-              <MdArrowRight size={28} />
-            </div>
-          </>
-        )}
-        {id === "locationId" && location && locationModal.isOpen && (
-          <>
-            <div
-              onClick={() => locationModal.onClose()}
-              className="absolute right-4 top-5"
-            >
-              <MdArrowDropDown size={28} />
-            </div>
-          </>
-        )}
+        
       </div>
     </>
   );
