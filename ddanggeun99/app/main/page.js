@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Tabbar from '../components/tabbar/Tabbar'
 import Navbar from '../components/navbar/Navbar'
 import { useRouter } from 'next/navigation';
-import Animate from '../components/animate';
+import Animate from '../components/Animate';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 

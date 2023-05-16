@@ -8,7 +8,7 @@ import EditLink from "./EditLink";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Animate from "../components/animate";
+import Animate from "../components/Animate";
 
 
 function Mypage() {

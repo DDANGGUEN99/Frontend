@@ -6,7 +6,7 @@ import Navbar from "../components/navbar/Navbar";
 import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 import { useRouter } from 'next/navigation';
-import Animate from "../components/animate";
+import Animate from "../components/Animate";
 export default function CreatePost() {
   const animate = {
     initial: {
