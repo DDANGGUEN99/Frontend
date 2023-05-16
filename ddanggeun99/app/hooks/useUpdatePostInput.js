@@ -1,6 +1,10 @@
 import { create } from "zustand";
 
-const useCreatePostInput = create((set) => ({
+
+
+
+
+const useUpdatePostInput = create((set) => ({
   category_id: 2,
   title: "",
   content: "",
@@ -13,4 +17,4 @@ const useCreatePostInput = create((set) => ({
   setItem_images: (payload) => set({ item_images: payload }),
 }));
 
-export default useCreatePostInput;
+export default useUpdatePostInput;

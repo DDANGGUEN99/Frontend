@@ -42,6 +42,7 @@ export default function CreatePost() {
       );
       console.log(response);
       setPublicId(response.data.public_id);
+      console.log(response.data.url)
       cloudinaryUrl.setCloudinaryUrl(response.data.url)
       return response.data.url;
     } catch (error) {

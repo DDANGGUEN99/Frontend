@@ -1,8 +1,10 @@
 "use client";
 
-import useLoginInput from "@/app/hooks/useLoginInput";
-import useRegisterInput from "@/app/hooks/useRegisterInput";
-import { MdArrowRight } from "react-icons/md";
+import { MdArrowRight, MdArrowDropDown } from "react-icons/md";
+import useLoginInput from "../../hooks/useLoginInput";
+import useRegisterInput from "../../hooks/useRegisterInput";
+import useLocationModal from "../../hooks/useLocationModal";
+
 export default function Input({
   id,
   disabled,
@@ -12,6 +14,7 @@ export default function Input({
   outline,
   location,
 }) {
+  const locationModal = useLocationModal();
   const loginInput = useLoginInput();
   const registerInput = useRegisterInput();
   const handleChangeInput = (e) => {
@@ -71,14 +74,27 @@ export default function Input({
       `}
         >
           {label}
-          {id === "locationId" && location && (
-            <>
-              <div className="absolute  -top-8 left-80">
-                <MdArrowRight />
-              </div>
-            </>
-          )}
         </label>
+        {id === "locationId" && location && !locationModal.isOpen && (
+          <>
+            <div
+              onClick={() => locationModal.onOpen()}
+              className="absolute right-4 top-5"
+            >
+              <MdArrowRight size={28} />
+            </div>
+          </>
+        )}
+        {id === "locationId" && location && locationModal.isOpen && (
+          <>
+            <div
+              onClick={() => locationModal.onClose()}
+              className="absolute right-4 top-5"
+            >
+              <MdArrowDropDown size={28} />
+            </div>
+          </>
+        )}
       </div>
     </>
   );

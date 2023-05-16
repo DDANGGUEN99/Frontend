@@ -10,7 +10,7 @@ export default function Detail() {
           <div className="flex">
             <div>작성자 프로필</div>
             <div>
-              <div>작성자 닉네임</div>
+              <div>작성자 닉네임</div> 
               <div>작성자 위치</div>
             </div>
           </div>

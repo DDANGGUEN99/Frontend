@@ -10,20 +10,21 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import useCloudinaryUrl from "../../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../../hooks/useCreatePostInput";
+import { useRouter } from "next/navigation";
 
 function Navbar({ page }) {
   switch (page) {
     case "createpost":
-      const cloudinaryUrl = useCloudinaryUrl
-      const { category_id, title, content, price, item_images } =
+      const router = useRouter();
+      const cloudinaryUrl = useCloudinaryUrl();
+      console.log(cloudinaryUrl)
+      const { category_id, title, content, price } =
         useCreatePostInput();
 
       const submitCreatePost = async () => {
         try {
           const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
           const newPost = {
-            // user_id: 43,
-            // nickname: "jh",
             category_id: 1,
             title,
             content,
@@ -31,9 +32,6 @@ function Navbar({ page }) {
             item_images: cloudinaryUrl.cloudinaryUrl,
           };
           console.log(newPost);
-          console.log(Cookies.get("accesstoken"));
-          console.log(Cookies.get("refreshtoken"));
-
           const response = await axios.post(`${serverUrl}/api/items`, newPost, {
             headers: {
               accesstoken: `Bearer ${Cookies.get("accesstoken")}`,
@@ -42,6 +40,7 @@ function Navbar({ page }) {
           });
           console.log(response);
           alert("게시글 작성 완료!");
+          router.push(`/main`);
         } catch (err) {
           console.log(err);
         }
@@ -49,8 +48,7 @@ function Navbar({ page }) {
       return (
         <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
           <div>
-            {" "}
-            <ImCancelCircle size={28} />{" "}
+            <ImCancelCircle size={28} />
           </div>
           <div>내 물건 팔기</div>
           <div onClick={submitCreatePost} className="text-orange-400 text-xl">
