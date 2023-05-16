@@ -4,8 +4,9 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import Input from "../components/inputs/Input";
 import useRegisterInput from "../hooks/useRegisterInput";
-import { motion, AnimatePresence } from "framer-motion"
 import Animate from "../components/Animate";
+import { useState } from "react";
+import { AiFillCaretDown, AiFillCaretRight } from "react-icons/ai";
 
 export default function Register() {
   // 화면 전환 애니메이션 설정
@@ -22,23 +23,29 @@ export default function Register() {
     exit: {
       opacity: 0,
     },
-  }
-
+  };
+  const [locationModal, setLocationModal] = useState(false);
   const router = useRouter();
   // nickname, email, password, confirmPassword, locationId를 가져옴.
-  const { nickname, email, password, confirmPassword, locationId } =
-    useRegisterInput();
+  const {
+    nickname,
+    email,
+    password,
+    locationId,
+    setLocationId,
+    locationNum,
+    setLocationNum,
+  } = useRegisterInput();
 
   // 회원가입 버튼을 눌렀을때 작동하는 함수
   const onSubmitRegister = async () => {
     const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-
     const newUser = {
       nickname,
       email,
       password,
-      location_id: 1,
-      user_image: "123",
+      location_id: locationNum,
+      user_image: null,
     };
     try {
       const response = await axios.post(`${serverUrl}/api/signup`, newUser);
@@ -65,10 +72,9 @@ export default function Register() {
     } else {
       // 닉네임 중복 체크
       try {
-        const response = await axios.get(
-          `${serverUrl}/api/checkNickname`,
-          { params: { nickname: nickname } }
-        );
+        const response = await axios.get(`${serverUrl}/api/checkNickname`, {
+          params: { nickname: nickname },
+        });
         return console.log(response);
       } catch (error) {
         console.log(error);
@@ -78,7 +84,7 @@ export default function Register() {
 
   return (
     <Animate animate={animate}>
-      <div className="flex flex-col h-full gap-10 justify-center ">
+      <div className="flex flex-col h-full gap-10 justify-center  ">
         <div className="flex justify-center items-center">
           <img width="300px" src="/images/carrot.png" />
         </div>
@@ -108,7 +114,145 @@ export default function Register() {
           confirm="중복 확인"
           onSubmitConfirm={onSubmitConfirm}
         />
-        <RegisterInput id="locationId" label="거주지" />
+        <div
+          onClick={() => {
+            locationModal ? setLocationModal(false) : setLocationModal(true);
+          }}
+          className="flex w-11/12 pl-20 items-center relative"
+        >
+          <div className="cursor-default pl-2 w-28 flex justify-start items-center ">
+            거주지
+          </div>
+          <div>
+            <div className="flex flex-col">
+              <button className="w-[400px] flex justify-between text-md p-5 font-medium bt-white border-2 border-black rounded-md outline-none transition disabled:opacity-70 disabled:cursor-not-allowed">
+                {locationId}
+                {locationModal ? (
+                  <div className="pt-1">
+                    <div>
+                      <AiFillCaretDown />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="pt-1">
+                    <div>
+                      <AiFillCaretRight />
+                    </div>
+                  </div>
+                )}
+              </button>
+            </div>
+            {locationModal && (
+              <div className="flex flex-col justify-center items-center relative ">
+                <div className="absolute top-1 py-2 flex flex-row items-center justify-start overflow-x-auto gap-2 bg-white px-6  rounded-t-xl z-10 border-x-2 border-t-2 border-black ">
+                  <div
+                    onClick={() => {
+                      setLocationId("서울");
+                      setLocationNum(0);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    서울
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("경기도");
+                      setLocationNum(1);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    경기도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("강원도");
+                      setLocationNum(2);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    강원도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("충청북도");
+                      setLocationNum(3);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    충청북도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("충청남도");
+                      setLocationNum(4);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    충청남도
+                  </div>
+                </div>
+                <div className="absolute top-8  py-2 flex flex-row items-center justify-start overflow-x-auto gap-2 bg-white rounded-b-xl px-6 z-10 border-x-2 border-b-2 border-black ">
+                  <div
+                    onClick={() => {
+                      setLocationId("전라북도");
+                      setLocationNum(5);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    전라북도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("전라남도");
+                      setLocationNum(6);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    전라남도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("경상북도");
+                      setLocationNum(7);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    경상북도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("경상남도");
+                      setLocationNum(8);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    경상남도
+                  </div>
+                  <div
+                    onClick={() => {
+                      setLocationId("제주");
+                      setLocationNum(9);
+                      setLocationModal(false);
+                    }}
+                    className="w-16 text-center cursor-pointer"
+                  >
+                    제주
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
         <div
           onClick={onSubmitRegister}
           className=" cursor-pointer mb-10 text-center self-center w-4/5 max-w-screen-md bg-orange-400 text-white text-2xl rounded-lg py-5 "
@@ -131,8 +275,9 @@ function RegisterInput({ id, label, confirm, type, onSubmitConfirm }) {
         <div
           onClick={(e) => onSubmitConfirm(e, id)}
           className={`flex ml-4 py-0 bg-orange-400 text-white 
-          ${confirm && "px-2"
-            } py-2 rounded-lg text-center items-center justify-center cursor-pointer`}
+          ${
+            confirm && "px-2"
+          } py-2 rounded-lg text-center items-center justify-center cursor-pointer`}
         >
           {confirm}
         </div>
