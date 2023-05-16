@@ -113,7 +113,7 @@ export default function CreatePost() {
           <input
             name="price"
             onChange={handleChangeInput}
-            value={createPostInput.price}
+            value={createPostInput.stringPrice}
             placeholder="W 가격 (선택사항)"
           />
         </div>
