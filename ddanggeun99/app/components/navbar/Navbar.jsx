@@ -48,7 +48,7 @@ function Navbar({ page }) {
       return (
         <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
           <div>
-            <ImCancelCircle size={28} />
+            <ImCancelCircle size={28} onClick={()=>{router.push('/main')}}/>
           </div>
           <div>내 물건 팔기</div>
           <div onClick={submitCreatePost} className="text-orange-400 text-xl">
