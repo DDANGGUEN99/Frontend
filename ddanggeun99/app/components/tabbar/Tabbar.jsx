@@ -8,6 +8,7 @@ import { BsChat } from "react-icons/bs";
 import MypageLink from "./MypageLink";
 import { useRouter } from "next/navigation";
 
+
 function Tabbar() {
   const router = useRouter()
   return (
@@ -17,20 +18,20 @@ function Tabbar() {
         onClick={() => router.push("/main")}
         className="flex flex-col justify-center items-center">
           <BiHomeAlt />
-          <p className="text-lg">홈</p>
+          <button className="text-lg">홈</button>
         </div>
-        <div className="flex flex-col justify-center items-center">
+        <button className="flex flex-col justify-center items-center">
           <MdLocationCity />
           <p className="text-lg">동네생활</p>
-        </div>
-        <div className="flex flex-col justify-center items-center">
+        </button>
+        <button className="flex flex-col justify-center items-center">
           <TiLocationOutline />
           <p className="text-lg">내 근처</p>
-        </div>
-        <div className="flex flex-col justify-center items-center">
+        </button>
+        <button className="flex flex-col justify-center items-center">
           <BsChat />
           <p className="text-lg"> 채팅</p>
-        </div>
+        </button>
         <MypageLink />
       </div>
     </>
