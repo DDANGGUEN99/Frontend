@@ -5,7 +5,6 @@ import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
-import { useRouter } from "next/navigation";
 import Animate from "../components/Animate";
 import { BsFillCameraFill } from "react-icons/bs";
 export default function CreatePost() {
@@ -27,8 +26,6 @@ export default function CreatePost() {
   //cloudinary
   const cloudinaryUrl = useCloudinaryUrl();
   const [publicId, setPublicId] = useState(null);
-  const [selectedFileNum, setSelectedFileNum] = useState(0);
-
   const [imageUrls, setImageUrls] = useState([]);
 
   const uploadImage = async (file) => {
@@ -54,15 +51,12 @@ export default function CreatePost() {
   //이미지 핸들러
   const handleImageChange = (e) => {
     const files = e.target.files;
-    const imageUrls = Array.from(files).map((file) =>
+    const addImageUrls = Array.from(files).map((file) =>
       URL.createObjectURL(file)
     );
-    const selectedFileCount = files.length;
-    setSelectedFileNum(selectedFileCount);
-    setImageUrls(imageUrls);
+    let newImageUrls = [...imageUrls, ...addImageUrls];
+    setImageUrls(newImageUrls);
   };
-
-  const router = useRouter();
 
   const createPostInput = useCreatePostInput();
 
@@ -104,11 +98,28 @@ export default function CreatePost() {
                     multiple
                   />
                 </div>
-                <div>{selectedFileNum}/10</div>
+                <div>{imageUrls.length}/10</div>
               </div>
             </>
-            {imageUrls.map((imageUrl) => (
-              <ImagePreview key={imageUrl} imageUrl={imageUrl} />
+            {imageUrls.map((imageUrl, i) => (
+              <div className="relative">
+                <img
+                  key={i}
+                  className="w-20 h-20"
+                  src={imageUrl}
+                  alt="이미지 미리보기"
+                />
+                <div
+                  onClick={() => {
+                    const updatedImageUrls = [...imageUrls];
+                    updatedImageUrls.splice(i, 1);
+                    setImageUrls(updatedImageUrls);
+                  }}
+                  className="cursor-pointer absolute top-0 right-0"
+                >
+                  x
+                </div>
+              </div>
             ))}
           </div>
         </div>
@@ -263,5 +274,5 @@ export default function CreatePost() {
 }
 
 const ImagePreview = ({ imageUrl }) => {
-  return <img className="w-20 h-20" src={imageUrl} alt="이미지 미리보기" />;
+  return;
 };

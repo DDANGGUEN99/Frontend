@@ -28,15 +28,13 @@ export default function Detail() {
     }
   };
 
-  console.log(item.item_images?.split(","));
-
   useEffect(() => {
     getDetailItems();
   }, []);
 
   return (
     <>
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-10 pb-32">
         <Navbar page="detail" />
         <div className="w-full">
           <img width="100%" src={item.item_images?.split(",")[0]} />
