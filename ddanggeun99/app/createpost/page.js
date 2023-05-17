@@ -5,10 +5,10 @@ import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
 import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
-import { useRouter } from 'next/navigation';
 import Animate from "../components/animate";
 
 export default function CreatePost() {
+  // 화면 전환 애니메이션
   const animate = {
     initial: {
       opacity: 0,
@@ -55,8 +55,6 @@ export default function CreatePost() {
     setImageSelected(selectedFile);
     uploadImage(selectedFile);
   };
-
-  const router = useRouter()
 
   const createPostInput = useCreatePostInput();
 
