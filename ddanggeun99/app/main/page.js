@@ -78,7 +78,7 @@ function Main() {
           {items.map((item) => (
             <div key={item.item_id} className="flex items-center border-b p-[10px] border-x" >
               <div className="w-[130px] ml-[10px]" >
-                <img src={item.item_images}
+                <img src={item.thumbnail_url}
                   style={{ borderRadius: "10px" }} />
               </div>
               <div className="ml-[10px] mb-[10px]">
