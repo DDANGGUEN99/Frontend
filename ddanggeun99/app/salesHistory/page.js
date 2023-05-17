@@ -4,7 +4,7 @@ import React from 'react'
 import Card from '../components/card/Card'
 import Tabbar from '../components/tabbar/Tabbar'
 import Navbar from '../components/navbar/Navbar'
-import Animate from '../components/animate';
+import Animate from '../components/Animate';
 
 
 function salesHistory() {
