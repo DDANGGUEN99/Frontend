@@ -28,7 +28,7 @@ export default function Detail() {
     }
   };
 
-  console.log(item);
+  console.log(item.item_images?.split(","));
 
   useEffect(() => {
     getDetailItems();
@@ -36,14 +36,14 @@ export default function Detail() {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-10">
         <Navbar page="detail" />
         <div className="w-full">
-          <img width="100%" src={item.item_images} />{" "}
+          <img width="100%" src={item.item_images?.split(',')[0]} />
         </div>
         <div className="flex justify-between">
-          <div className="flex border-y-2 w-full">
-            <div>작성자 프로필사진</div>
+          <div className="flex border-y-2 w-full gap-2">
+            <div><img width="100%" src={item.profile_url} /></div>
             <div>
               <div>{item.nickname}</div>
               <div>{item.location}</div>
@@ -53,12 +53,17 @@ export default function Detail() {
           <div></div>
         </div>
         <div>{item.title}</div>
-        <div className="flex">
+        <div className="flex gap-2">
           <div className=" text-neutral-400">{item.category} </div>
           <div className=" text-neutral-400">{item.createdAt} </div>
         </div>
         <div>{item.content}</div>
+        <div className="flex gap-2">
+        <div className=" text-neutral-400">관심</div>
+        <div className=" text-neutral-400">조회</div>
       </div>
+      </div>
+
       <Tabbar page="detail"/>
     </>
   );
