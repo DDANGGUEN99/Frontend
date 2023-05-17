@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { BiHomeAlt } from "react-icons/bi";
 import { MdLocationCity } from "react-icons/md";
 import { TiLocationOutline } from "react-icons/ti";
@@ -8,11 +8,37 @@ import { BsChat } from "react-icons/bs";
 import MypageLink from "./MypageLink";
 import { useRouter } from "next/navigation";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-function Tabbar({ page, is_liked, detailItem }) {
+function Tabbar({ id, page, is_liked, detailItem }) {
   const router = useRouter();
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  const accessToken = Cookies.get("accesstoken");
+  const refreshToken = Cookies.get("refreshtoken");
   if (page === "detail") {
-    const toggleLike = () => {};
+    const [liked, setLiked] = useState(is_liked);
+    const toggleLike = async () => {
+      if (liked) {
+        setLiked(false);
+      } else {
+        setLiked(true);
+        try {
+          const response = await axios.put(
+            `${serverUrl}/api/items/${Number(id)}`,{},
+            {
+              headers: {
+                accesstoken: `Bearer ${accessToken}`,
+                refreshtoken: `Bearer ${refreshToken}`,
+              },
+            }
+          );
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    };
     return (
       <>
         <div className=" w-full fixed border-t-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-center text-black flex justify-between items-center max-w-screen-md mx-auto self-center border-x">
@@ -23,11 +49,13 @@ function Tabbar({ page, is_liked, detailItem }) {
             >
               <AiOutlineHeart
                 size={28}
-                className="fill-neutral-500/70 absolute -top-[2px] -right-[2px]"
+                className={`${
+                  liked ? "fill-orange-400" : "fill-neutral-500/70"
+                } absolute -top-[2px] left-[6px]`}
               />
               <AiFillHeart
                 size={24}
-                className={is_liked ? "fill-orange-400" : "fill-white"}
+                className={liked ? "fill-orange-400" : "fill-white"}
               />
             </div>
             <div className="flex flex-col ml-4">

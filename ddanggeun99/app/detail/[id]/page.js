@@ -63,12 +63,12 @@ export default function Detail() {
         </div>
         <div>{item.content}</div>
         <div className="flex gap-2">
-          <div className=" text-neutral-400">관심</div>
-          <div className=" text-neutral-400">조회</div>
+          <div className=" text-neutral-400">관심{item.likes}</div>
+          <div className=" text-neutral-400">조회{item.views}</div>
         </div>
       </div>
 
-      <Tabbar page="detail" detailItem={item} />
+      <Tabbar page="detail" detailItem={item} id={id} />
     </>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ImCancelCircle } from "react-icons/im";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsList, BsBell, BsThreeDotsVertical } from "react-icons/bs";
@@ -20,7 +20,8 @@ function Navbar({ page }) {
   const router = useRouter();
   const { id } = useParams();
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-
+  const accessToken = Cookies.get("accesstoken");
+  const refreshToken = Cookies.get("refreshtoken");
   switch (page) {
     case "createpost":
       const cloudinaryUrl = useCloudinaryUrl();
@@ -99,11 +100,54 @@ function Navbar({ page }) {
         </div>
       );
     case "detail":
+      const { id } = useParams();
+      const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+      const [item, setItem] = useState("");
+      const getDetailItems = async () => {
+        const accessToken = Cookies.get("accesstoken");
+        const refreshToken = Cookies.get("refreshtoken");
+        try {
+          const response = await axios.get(`${serverUrl}/api/items/${id}`, {
+            headers: {
+              accesstoken: `Bearer ${accessToken}`,
+              refreshtoken: `Bearer ${refreshToken}`,
+            },
+          });
+          setItem(response.data.item);
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      useEffect(() => {
+        getDetailItems();
+      }, []);
+      let user = null;
+      if (localStorage.getItem("user") !== "undefined") {
+        user = JSON.parse(localStorage.getItem("user"))?.nickname;
+      }
       const [isOpen, setIsOpen] = useState(false);
+      // 게시글 삭제
       const deletePost = async () => {
         try {
-          const response = await axios.delete(`${serverUrl}/api/items/${id}`);
+          const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+          const newPost = {
+            status: "D",
+          };
+          const response = await axios.put(
+            `${serverUrl}/api/items/${id}`,
+            newPost,
+            {
+              headers: {
+                accesstoken: `Bearer ${Cookies.get("accesstoken")}`,
+                refreshtoken: `Bearer ${Cookies.get("refreshtoken")}`,
+              },
+            }
+          );
           console.log(response);
+          alert("게시글 수정 완료!");
+          router.push(`/main`);
         } catch (err) {
           console.log(err);
         }
@@ -126,14 +170,17 @@ function Navbar({ page }) {
           </div>
           <div className="flex items-center gap-6 relative">
             <FiShare size={"30px"} />
-            <div
-              className="cursor-pointer"
-              onClick={() => {
-                isOpen ? setIsOpen(false) : setIsOpen(true);
-              }}
-            >
-              <BsThreeDotsVertical size={"30px"} />
-            </div>
+            {item.nickname === user && (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  isOpen ? setIsOpen(false) : setIsOpen(true);
+                }}
+              >
+                <BsThreeDotsVertical size={"30px"} />
+              </div>
+            )}
+
             <div
               className={`absolute cursor-pointer top-12 w-24 gap-5 pt-2 ${
                 isOpen && "shadow-md"
