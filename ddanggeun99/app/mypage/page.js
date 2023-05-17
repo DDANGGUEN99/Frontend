@@ -4,16 +4,17 @@ import { BsList } from "react-icons/bs";
 import { AiOutlineShopping, AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
 import Navbar from "../components/navbar/Navbar";
 import Tabbar from "../components/tabbar/Tabbar";
-import EditLink from "./EditLink";
-import { MdOutlineNavigateNext } from "react-icons/md";
+import { MdOutlineNavigateNext, MdNavigateNext } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import Animate from "../components/Animate";
-
+import Animate from "../components/animate";
+import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
+import axios from "axios";
 
 function Mypage() {
   const router = useRouter()
-
+  const [userData, setUserData] = useState(null)
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const animate = {
     initial: {
       opacity: 0,
@@ -29,16 +30,42 @@ function Mypage() {
     },
   }
 
+  useEffect(() => {
+    getUserData()
+  }, [])
+
+  const getUserData = async () => {
+    const accessToken = Cookies.get('accesstoken');
+    const refreshToken = Cookies.get('refreshtoken');
+
+    try {
+      const response = await axios.get(`${serverUrl}/api/mypage`, {
+        headers: {
+          accesstoken: `Bearer ${accessToken}`,
+          refreshtoken: `Bearer ${refreshToken}`,
+        }
+      });
+
+      setUserData(response.data.userData)
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
 
   return (
     <Animate animate={animate}>
-      <div className="h-full border-x">
-        <Navbar page="mypage" />
+      <Navbar page="mypage" />
+      <div className="h-full border-x mt-16">
         <div className="p-3">
-          <div className="flex justify-between items-center">
-            <img className="w-[50px] rounded-full" src="https://png.pngtree.com/element_our/20190531/ourmid/pngtree-yellow-carrot-illustration-image_1295171.jpg"></img>
-            <div className="mr-[530px] text-xl">닉네임</div>
-            <EditLink />
+          <div className="flex justify-between items-center ml-1">
+            {userData && userData.nickname && userData.user_image && (<>
+              <img className="w-[60px] h-[60px] rounded-full" src={userData.user_image}></img>
+              <div className="mr-[470px] text-xl">{userData.nickname}</div>
+            </>
+            )}
+            <button onClick={() => { router.push('/edit') }} className="rounded-md w-28 h-8 bg-slate-300">프로필 보기</button>
           </div>
 
           <div className="p-3  border rounded-lg border-dashed border-orange-500 mt-6 mb-10">
@@ -63,7 +90,7 @@ function Mypage() {
         </div>
         <Tabbar />
       </div>
-    </Animate>
+    </Animate >
   )
 }
 

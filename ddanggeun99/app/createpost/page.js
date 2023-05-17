@@ -8,6 +8,7 @@ import useCreatePostInput from "../hooks/useCreatePostInput";
 import Animate from "../components/Animate";
 import { BsFillCameraFill } from "react-icons/bs";
 export default function CreatePost() {
+  // 화면 전환 애니메이션
   const animate = {
     initial: {
       opacity: 0,
