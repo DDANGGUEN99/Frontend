@@ -39,12 +39,18 @@ export default function Detail() {
       <div className="flex flex-col gap-10">
         <Navbar page="detail" />
         <div className="w-full">
-          <img width="100%" src={item.item_images?.split(',')[0]} />
+          <img width="100%" src={item.item_images?.split(",")[0]} />
         </div>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <div className="flex border-y-2 w-full gap-2">
-            <div><img width="100%" src={item.profile_url} /></div>
             <div>
+              {item.profile_url === "123" || item.profile_url === "null" ? (
+                <img className="w-20 h-20" width="100%"  src='/images/placeholder.png' />
+              ) : (
+                <img className="w-20 h-20" width="100%" src={item.profile_url} />
+              )}
+            </div>
+            <div className="flex flex-col justify-center items-start">
               <div>{item.nickname}</div>
               <div>{item.location}</div>
             </div>
@@ -59,12 +65,12 @@ export default function Detail() {
         </div>
         <div>{item.content}</div>
         <div className="flex gap-2">
-        <div className=" text-neutral-400">관심</div>
-        <div className=" text-neutral-400">조회</div>
-      </div>
+          <div className=" text-neutral-400">관심</div>
+          <div className=" text-neutral-400">조회</div>
+        </div>
       </div>
 
-      <Tabbar page="detail"/>
+      <Tabbar page="detail" detailItem={item} />
     </>
   );
 }
