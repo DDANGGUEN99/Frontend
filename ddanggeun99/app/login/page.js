@@ -25,9 +25,9 @@ export default function Login() {
     };
     try {
       const response = await axios.post(`${serverUrl}/api/login`, user);
-      console.log(response.data);
       Cookies.set("accesstoken", response.data.accesstoken);
       Cookies.set("refreshtoken", response.data.refreshtoken);
+      localStorage.setItem("user", JSON.stringify(response.data.userData));
       alert("로그인 완료!");
       router.push("/main");
 
