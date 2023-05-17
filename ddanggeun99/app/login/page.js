@@ -26,7 +26,6 @@ export default function Login() {
     try {
       const response = await axios.post(`${serverUrl}/api/login`, user);
       console.log(response.data);
-
       Cookies.set("accesstoken", response.data.accesstoken);
       Cookies.set("refreshtoken", response.data.refreshtoken);
       alert("로그인 완료!");
@@ -64,14 +63,14 @@ export default function Login() {
         </div>
         <RegisterInput id="loginEmail" label="이메일" />
         <RegisterInput id="loginPassword" label="비밀번호" type="password" />
-        <div className="flex  pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 ">
+        <div className="flex pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 ">
           <div>
             <AiFillGithub />
           </div>
           <div>깃헙 로그인 </div>
         </div>
 
-        <div className="flex  pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 ">
+        <div className="flex pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 ">
           <div>
             <FcGoogle />
           </div>

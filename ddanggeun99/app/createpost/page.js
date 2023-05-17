@@ -7,6 +7,7 @@ import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 import { useRouter } from "next/navigation";
 import Animate from "../components/Animate";
+import { BsFillCameraFill } from "react-icons/bs";
 export default function CreatePost() {
   const animate = {
     initial: {
@@ -25,8 +26,10 @@ export default function CreatePost() {
 
   //cloudinary
   const cloudinaryUrl = useCloudinaryUrl();
-  const [imageSelected, setImageSelected] = useState(null);
   const [publicId, setPublicId] = useState(null);
+  const [selectedFileNum, setSelectedFileNum] = useState(0);
+
+  const [imageUrls, setImageUrls] = useState([]);
 
   const uploadImage = async (file) => {
     const formData = new FormData();
@@ -48,10 +51,15 @@ export default function CreatePost() {
     }
   };
 
+  //이미지 핸들러
   const handleImageChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setImageSelected(selectedFile);
-    uploadImage(selectedFile);
+    const files = e.target.files;
+    const imageUrls = Array.from(files).map((file) =>
+      URL.createObjectURL(file)
+    );
+    const selectedFileCount = files.length;
+    setSelectedFileNum(selectedFileCount);
+    setImageUrls(imageUrls);
   };
 
   const router = useRouter();
@@ -74,32 +82,39 @@ export default function CreatePost() {
         break;
     }
   };
+
   return (
     <Animate animate={animate}>
       <Navbar page="createpost" />
       <div className="pt-16">
-        <div className="flex flex-col items-center justify-between px-8 border-b-2 py-8">
-          <div className="flex flex-col justify-center items-center">
-            <img
-              className="w-[200px] h-[200px] "
-              src={cloudinaryUrl.cloudinaryUrl}
-            />
-            <div> 이미지를 등록해주세요!</div>
+        <div className="flex flex-col items-start justify-between px-8 border-b-2 py-8">
+          <div className="flex flex-row justify-start items-start gap-3">
+            <>
+              <div
+                className="cursor-pointer flex flex-col justify-center items-center w-20 h-20 border-2 rounded-md p-2"
+                onClick={() => document.getElementById("fileInput").click()} // onClick 이벤트 핸들러 추가
+              >
+                <div>
+                  <BsFillCameraFill size={32} />
+                  <input
+                    id="fileInput" // input 요소에 id 추가
+                    onChange={handleImageChange}
+                    type="file"
+                    className="hidden"
+                    multiple
+                  />
+                </div>
+                <div>{selectedFileNum}/10</div>
+              </div>
+            </>
+            {imageUrls.map((imageUrl) => (
+              <ImagePreview key={imageUrl} imageUrl={imageUrl} />
+            ))}
           </div>
-          <input
-            onChange={handleImageChange}
-            type="file"
-            className="block w-full text-sm text-slate-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-sm file:font-semibold
-                    file:bg-violet-50 file:text-violet-700
-                    hover:file:bg-violet-100
-                  "
-          />
         </div>
         <div className="border-b-2 pt-6 pb-3 pl-2">
           <input
+            className="w-full"
             name="title"
             onChange={handleChangeInput}
             value={createPostInput.title}
@@ -226,6 +241,7 @@ export default function CreatePost() {
         </div>
         <div className="border-b-2 py-3 pl-2">
           <input
+            className="w-full"
             name="price"
             onChange={handleChangeInput}
             value={createPostInput.stringPrice}
@@ -234,6 +250,7 @@ export default function CreatePost() {
         </div>
         <div className="border-b-2 h-40 py-3 pl-2">
           <input
+            className="w-full"
             name="content"
             onChange={handleChangeInput}
             value={createPostInput.content}
@@ -244,3 +261,7 @@ export default function CreatePost() {
     </Animate>
   );
 }
+
+const ImagePreview = ({ imageUrl }) => {
+  return <img className="w-20 h-20" src={imageUrl} alt="이미지 미리보기" />;
+};

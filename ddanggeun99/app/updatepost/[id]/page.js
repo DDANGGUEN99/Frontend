@@ -116,7 +116,6 @@ useEffect(() => {
               className="w-[200px] h-[200px] "
               src={updateCloudinaryUrl.updateCloudinaryUrl}
             />
-            <div> 이미지를 등록해주세요!</div>
           </div>
           <input
             onChange={handleImageChange}
