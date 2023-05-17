@@ -7,31 +7,37 @@ import { TiLocationOutline } from "react-icons/ti";
 import { BsChat } from "react-icons/bs";
 import MypageLink from "./MypageLink";
 import { useRouter } from "next/navigation";
-import { AiFillHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 function Tabbar({ page, is_liked, detailItem }) {
   const router = useRouter();
   if (page === "detail") {
-    const toggleLikeButton = () => {
-      
-    }
+    const toggleLike = () => {};
     return (
       <>
         <div className=" w-full fixed border-t-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-center text-black flex justify-between items-center max-w-screen-md mx-auto self-center border-x">
           <div className="flex items-center justify-center h-full">
-            <div 
-            onClick={toggleLikeButton}
-            className="border-r-[2px] h-full flex items-center justify-center w-16">
-              <AiFillHeart size={24}/>
+            <div
+              onClick={toggleLike}
+              className="relative hover:opacity-80 transiton cursor-pointer border-r-2 px-2"
+            >
+              <AiOutlineHeart
+                size={28}
+                className="fill-neutral-500/70 absolute -top-[2px] -right-[2px]"
+              />
+              <AiFillHeart
+                size={24}
+                className={is_liked ? "fill-orange-400" : "fill-white"}
+              />
             </div>
             <div className="flex flex-col ml-4">
-              <div>{detailItem.price.toLocaleString("en")}원</div>
+              <div>{detailItem?.price?.toLocaleString("en")}원</div>
             </div>
           </div>
           <div>
-            <div
-            className="bg-orange-400 text-white px-3 py-2 rounded-md mr-3"
-            >채팅하기</div>
+            <div className="bg-orange-400 text-white px-3 py-2 rounded-md mr-3">
+              채팅하기
+            </div>
           </div>
         </div>
       </>
