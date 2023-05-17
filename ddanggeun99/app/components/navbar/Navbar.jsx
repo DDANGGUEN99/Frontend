@@ -2,20 +2,20 @@
 
 import React from "react";
 import { ImCancelCircle } from "react-icons/im";
-import { AiOutlineSearch } from "react-icons/ai";
+import { AiOutlineSearch, AiOutlineSetting } from "react-icons/ai";
 import { BsList, BsBell } from "react-icons/bs";
 import { RxCaretDown } from "react-icons/rx";
 import Cookies from "js-cookie";
-
 import axios from "axios";
 import useCloudinaryUrl from "../../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../../hooks/useCreatePostInput";
 import { useRouter } from "next/navigation";
+import { MdNavigateBefore } from "react-icons/md";
 
 function Navbar({ page }) {
+  const router = useRouter();
   switch (page) {
     case "createpost":
-      const router = useRouter();
       const cloudinaryUrl = useCloudinaryUrl();
       console.log(cloudinaryUrl)
       const { category_id, title, content, price } =
@@ -48,7 +48,7 @@ function Navbar({ page }) {
       return (
         <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
           <div>
-            <ImCancelCircle size={28} onClick={()=>{router.push('/main')}}/>
+            <ImCancelCircle size={28} onClick={() => { router.push('/main') }} />
           </div>
           <div>내 물건 팔기</div>
           <div onClick={submitCreatePost} className="text-orange-400 text-xl">
@@ -76,6 +76,26 @@ function Navbar({ page }) {
           </div>
         </div>
       );
+    case "mypage":
+      return (
+        <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
+          <button className="flex items-center justify-end w-full">
+            <AiOutlineSetting onClick={() => { router.push('/logout') }} />
+          </button>
+        </div>
+      )
+    case "logout":
+      return (
+        <div className="cursor-default flex items-center justify-between px-4 w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
+          <button className="flex items-center justify-start w-full ">
+            <MdNavigateBefore onClick={() => { router.push('/mypage') }} size={"32px"} />
+            <div className="flex justify-center w-full">
+              <p>설정</p>
+            </div>
+          </button>
+        </div>
+      )
+
       break;
   }
 }
