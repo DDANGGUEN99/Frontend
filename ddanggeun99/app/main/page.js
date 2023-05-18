@@ -55,7 +55,7 @@ function Main() {
       loading.offLoading()
     } catch (error) {
       console.log(error.response.data.errorMessage);
-      loading.offLoading()
+      loading.offLoading() 
     }
   };
 
