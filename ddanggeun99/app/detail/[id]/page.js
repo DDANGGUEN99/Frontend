@@ -12,7 +12,7 @@ export default function Detail() {
   const { id } = useParams();
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const [item, setItem] = useState("");
-  const [like, setLike] = useState([]);
+  const [like, setLike] = useState();
   const [likeNum, setLikeNum] = useState(item.likes);
   const accessToken = Cookies.get("accesstoken");
   const refreshToken = Cookies.get("refreshtoken");
@@ -66,7 +66,7 @@ export default function Detail() {
   useEffect(() => {
     getDetailItems();
     getLikedItems();
-  }, []);
+  }, [like]);
 
   const handleLike = (updatedLikeNum) => {
     setLikeNum(updatedLikeNum);
