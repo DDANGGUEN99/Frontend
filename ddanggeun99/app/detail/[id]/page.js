@@ -67,8 +67,7 @@ export default function Detail() {
   const handleLike = (updatedLikeNum) => {
     setLikeNum(updatedLikeNum);
   };
-  console.log(item)
-  console.log(like)
+
   return (
     <>
       <div className="flex flex-col gap-10 pb-32">

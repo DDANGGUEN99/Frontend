@@ -18,7 +18,6 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
   const refreshToken = Cookies.get("refreshtoken");
   const [isLiked, setIsLiked] = useState(false);
 
-
   if (page === "detail") {
     // 좋아요 처리 로직
     const toggleLike = async () => {
@@ -106,15 +105,24 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
             <BiHomeAlt />
             <p className="text-lg">홈</p>
           </div>
-          <div className="cursor-pointer flex flex-col justify-center items-center">
+          <div
+            onClick={() => alert("아직 준비중인 기능입니다!")}
+            className="cursor-pointer flex flex-col justify-center items-center"
+          >
             <MdLocationCity />
             <p className="text-lg">동네생활</p>
           </div>
-          <div className="cursor-pointer flex flex-col justify-center items-center">
+          <div
+            onClick={() => alert("아직 준비중인 기능입니다!")}
+            className="cursor-pointer flex flex-col justify-center items-center"
+          >
             <TiLocationOutline />
             <p className="text-lg">내 근처</p>
           </div>
-          <div className="cursor-pointer flex flex-col justify-center items-center">
+          <div
+            onClick={() => alert("아직 준비중인 기능입니다!")}
+            className="cursor-pointer flex flex-col justify-center items-center"
+          >
             <BsChat />
             <p className="text-lg"> 채팅</p>
           </div>

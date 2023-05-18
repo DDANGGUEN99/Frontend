@@ -101,9 +101,8 @@ export default function CreatePost() {
               </div>
             </>
             {imageUrls.map((imageUrl, i) => (
-              <div className="relative">
+              <div key={i} className="relative">
                 <img
-                  key={i}
                   className="w-20 h-20"
                   src={imageUrl}
                   alt="이미지 미리보기"
