@@ -16,7 +16,7 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const accessToken = Cookies.get("accesstoken");
   const refreshToken = Cookies.get("refreshtoken");
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(like);
 
   if (page === "detail") {
     // 좋아요 처리 로직
