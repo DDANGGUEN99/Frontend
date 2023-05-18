@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import { useRouter } from "next/navigation";
-import Animate from '../components/animate';
+import Animate from '../components/Animate';
 import { MdNavigateBefore } from "react-icons/md";
 import axios from 'axios';
 import Cookies from 'js-cookie';

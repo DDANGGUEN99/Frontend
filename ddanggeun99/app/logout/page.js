@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "../components/navbar/Navbar";
-import Animate from "../components/animate";
+import Animate from "../components/Animate";
 import Modal from 'react-modal';
 import { useState } from "react";
 import Cookies from 'js-cookie';

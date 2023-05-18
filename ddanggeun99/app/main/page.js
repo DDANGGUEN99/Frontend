@@ -7,12 +7,14 @@ import { useRouter } from 'next/navigation';
 import Animate from '../components/Animate';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useInView } from 'react-intersection-observer';
 
 function Main() {
   //화면 전환 애니메이션
   const router = useRouter()
-  const [items, setItems] = useState([]);
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  const [items, setItems] = useState([]);
+
   const animate = {
     initial: {
       opacity: 0,
@@ -28,6 +30,7 @@ function Main() {
     },
   }
 
+
   const getItems = async () => {
     const accessToken = Cookies.get('accesstoken');
     const refreshToken = Cookies.get('refreshtoken');
@@ -40,6 +43,7 @@ function Main() {
         },
         params: { page: 1 },
       });
+      console.log(response.data.items)
       setItems(response.data.items);
     } catch (error) {
       console.log(error.response.data.errorMessage);
