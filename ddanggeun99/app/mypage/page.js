@@ -6,7 +6,7 @@ import Navbar from "../components/navbar/Navbar";
 import Tabbar from "../components/tabbar/Tabbar";
 import { MdOutlineNavigateNext, MdNavigateNext } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import Animate from "../components/animate";
+import Animate from "../components/Animate";
 import { useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import axios from "axios";
@@ -62,7 +62,7 @@ function Mypage() {
           <div className="flex justify-between items-center ml-1">
             {userData && userData.nickname && userData.user_image && (<>
               <img className="w-[60px] h-[60px] rounded-full" src={userData.user_image}></img>
-              <div className="mr-[470px] text-xl">{userData.nickname}</div>
+              <div className="mr-[470px] text-xl ml-2">{userData.nickname}</div>
             </>
             )}
             <button onClick={() => { router.push('/edit') }} className="rounded-md w-28 h-8 bg-slate-300">프로필 보기</button>
