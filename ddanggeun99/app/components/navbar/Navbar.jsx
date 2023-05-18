@@ -39,6 +39,9 @@ function Navbar({ page }) {
 
       const submitCreatePost = async () => {
         try {
+          if(item_images.length === 0) {
+            alert("이미지를 등록해주세요!")
+          }
           const newPost = {
             category_id: category_id,
             title,
@@ -146,7 +149,7 @@ function Navbar({ page }) {
             }
           );
           console.log(response);
-          alert("게시글 수정 완료!");
+          alert("게시글 삭제 완료!");
           router.push(`/main`);
         } catch (err) {
           console.log(err);
