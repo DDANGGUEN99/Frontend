@@ -67,7 +67,7 @@ export default function Detail() {
   const handleLike = (updatedLikeNum) => {
     setLikeNum(updatedLikeNum);
   };
-
+  console.log(item)
   console.log(like)
   return (
     <>
