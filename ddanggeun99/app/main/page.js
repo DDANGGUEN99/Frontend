@@ -12,7 +12,11 @@ import useLoading from '../hooks/useLoading';
 
 
 function Main() {
-  //화면 전환 애니메이션
+
+  // 무한 스크롤 
+  const [ref, inView] = useInView(false);
+  const [page, setPage] = useState(1)
+
   const router = useRouter()
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const [items, setItems] = useState([]);
@@ -44,17 +48,47 @@ function Main() {
           accesstoken: `Bearer ${accessToken}`,
           refreshtoken: `Bearer ${refreshToken}`,
         },
-        params: { page: 1 },
+        params: { page: page },
       });
-      console.log(response.data.items)
-      setItems(response.data.items);
+      setItems((prevItems) => [...prevItems, ...response.data.items]);
+      setPage((prevPage) => prevPage + 1);
       loading.offLoading()
-
     } catch (error) {
       console.log(error.response.data.errorMessage);
       loading.offLoading()
     }
-  }
+  };
+
+  const getNewItems = async () => {
+    const accessToken = Cookies.get('accesstoken');
+    const refreshToken = Cookies.get('refreshtoken');
+    loading.onLoading()
+
+    try {
+      const response = await axios.get(`${serverUrl}/api/items`, {
+        headers: {
+          accesstoken: `Bearer ${accessToken}`,
+          refreshtoken: `Bearer ${refreshToken}`,
+        },
+        params: { page: page + 1 },
+      });
+      setItems((prevItems) => [...prevItems, ...response.data.items]);
+      setPage((prevPage) => prevPage + 1);
+      loading.offLoading()
+    } catch (error) {
+      console.log(error.response.data.errorMessage);
+      loading.offLoading()
+    }
+  };
+
+  useEffect(() => {
+    // inView가 true 일때만 실행한다.
+    if (inView) {
+      console.log(inView, '무한 스크롤 요청 ')
+
+      getNewItems();
+    }
+  }, [inView]);
 
   // 게시글 작성 시간 
   const getTimeDifference = (createdAt) => {
@@ -85,10 +119,10 @@ function Main() {
         {/* 카드 반복 부분 */}
         <div className="mt-16">
           {items.map((item) => (
-            <div 
-            onClick={() => router.push(`/detail/${item.item_id}`)}
-            key={item.item_id} className="flex items-center border-b p-[10px] border-x" >
-              <div className="w-[130px] ml-[10px]" >
+            <div key={item.item_id}
+              onClick={() => router.push(`/detail/${item.item_id}`)}
+              className="flex items-center border-b p-[10px] border-x" >
+              <div className="w-[130px] ml-[10px]">
                 <img src={item.thumbnail_url}
                   style={{ borderRadius: "10px" }} />
               </div>
@@ -100,21 +134,22 @@ function Main() {
             </div>
           ))}
           {/* 글쓰기 버튼  */}
-         
-         {
-          isLoading.isLoading === false && <div className="sticky bottom-24 self-end mr-6 flex justify-end">
-          <div
-            onClick={() => router.push("/createpost")}
-            className="cursor-pointer text-center w-32 bg-orange-400 text-white text-xl rounded-full p-4 "
-          >
-            + 글쓰기
-          </div>
-        </div>
-         }
-         
+
+          {
+            isLoading.isLoading === false && <div className="sticky bottom-24 self-end mr-6 flex justify-end">
+              <div
+                onClick={() => router.push("/createpost")}
+                className="cursor-pointer text-center w-32 bg-orange-400 text-white text-xl rounded-full p-4 "
+              >
+                + 글쓰기
+              </div>
+            </div>
+          }
+
 
         </div>
         <Tabbar page="main" />
+        <div ref={ref} className='h-5'></div>
       </>
     </Animate>
 
