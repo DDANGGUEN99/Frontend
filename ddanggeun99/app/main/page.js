@@ -8,12 +8,15 @@ import Animate from '../components/Animate';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useInView } from 'react-intersection-observer';
+import useLoading from '../hooks/useLoading';
+
 
 function Main() {
   //화면 전환 애니메이션
   const router = useRouter()
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const [items, setItems] = useState([]);
+  const loading = useLoading()
 
   const animate = {
     initial: {
@@ -34,7 +37,7 @@ function Main() {
   const getItems = async () => {
     const accessToken = Cookies.get('accesstoken');
     const refreshToken = Cookies.get('refreshtoken');
-
+    loading.onLoading()
     try {
       const response = await axios.get(`${serverUrl}/api/items`, {
         headers: {
@@ -45,8 +48,11 @@ function Main() {
       });
       console.log(response.data.items)
       setItems(response.data.items);
+      loading.offLoading()
+
     } catch (error) {
       console.log(error.response.data.errorMessage);
+      loading.offLoading()
     }
   }
 
