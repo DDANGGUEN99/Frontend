@@ -8,6 +8,7 @@ import Navbar from "@/app/components/navbar/Navbar";
 import useUpdatePostInput from "@/app/hooks/useUpdatePostInput";
 import Cookies from "js-cookie";
 import useUpdateCloudinaryUrl from "@/app/hooks/useUpdateCloudinaryUrl";
+import useCloudinaryUrl from "@/app/hooks/useCloudinaryUrl";
 export default function UpdatePost() {
   const animate = {
     initial: {
@@ -50,39 +51,40 @@ export default function UpdatePost() {
     }
   };
 
-// 수정할 게시글 불러오기 및 기본값 세팅
-const { id } = useParams();
-const updatePostInput = useUpdatePostInput()
-const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-const [item, setItem] = useState("");
+  // 수정할 게시글 불러오기 및 기본값 세팅
+  const { id } = useParams();
+  const updatePostInput = useUpdatePostInput();
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  const [item, setItem] = useState("");
+  const cloudinaryUrl = useCloudinaryUrl();
 
-const getDetailItems = async () => {
-  const accessToken = Cookies.get("accesstoken");
-  const refreshToken = Cookies.get("refreshtoken");
-  try {
-    const response = await axios.get(`${serverUrl}/api/items/${id}`, {
-      headers: {
-        accesstoken: `Bearer ${accessToken}`,
-        refreshtoken: `Bearer ${refreshToken}`,
-      },
-    });
-    setItem(response.data.item);
-    updatePostInput.setCategory_Id(response.data.item.category)
-    updatePostInput.setTitle(response.data.item.title)
-    updatePostInput.setContent(response.data.item.content)
-    updatePostInput.setPrice(response.data.item.price)
-    updateCloudinaryUrl.setCloudinaryUrl(response.data.item.item_images)
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const getDetailItems = async () => {
+    const accessToken = Cookies.get("accesstoken");
+    const refreshToken = Cookies.get("refreshtoken");
+    try {
+      const response = await axios.get(`${serverUrl}/api/items/${id}`, {
+        headers: {
+          accesstoken: `Bearer ${accessToken}`,
+          refreshtoken: `Bearer ${refreshToken}`,
+        },
+      });
+      console.log(response);
+      setItem(response.data.item);
+      updatePostInput.setCategory_Id(response.data.item.category);
+      updatePostInput.setTitle(response.data.item.title);
+      updatePostInput.setContent(response.data.item.content);
+      updatePostInput.setPrice(response.data.item.price);
+      updateCloudinaryUrl.setCloudinaryUrl(response.data.item.item_images);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    getDetailItems();
+  }, []);
 
-useEffect(() => {
-  getDetailItems();
-}, []);
-
-// 이미지 업로드하는 핸들러
+  // 이미지 업로드하는 핸들러
   const handleImageChange = (e) => {
     const selectedFile = e.target.files[0];
     setImageSelected(selectedFile);
@@ -106,11 +108,12 @@ useEffect(() => {
         break;
     }
   };
+  console.log(item);
   return (
     <Animate animate={animate}>
       <Navbar page="updatepost" />
       <div className="pt-16">
-        <div className="flex flex-col items-center justify-between px-8 border-b-2 py-8">
+        {/* <div className="flex flex-col items-center justify-between px-8 border-b-2 py-8">
           <div className="flex flex-col justify-center items-center">
             <img
               className="w-[200px] h-[200px] "
@@ -121,6 +124,33 @@ useEffect(() => {
             onChange={handleImageChange}
             type="file"
             className="block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-sm file:font-semibold
+                    file:bg-violet-50 file:text-violet-700
+                    hover:file:bg-violet-100
+                  "
+          />
+        </div> */}
+        <div
+          onClick={() => document.getElementById("fileInput").click()} // onClick 이벤트 핸들러 추가
+          className="cursor-pointer flex flex-col items-center justify-between px-8 py-8"
+        >
+          <div className="flex flex-col justify-center items-center">
+            <img
+              className="w-[200px] h-[200px] "
+              src={
+                cloudinaryUrl.cloudinaryUrl === ""
+                  ? item.item_images?.split(",")[0]
+                  : cloudinaryUrl.cloudinaryUrl
+              }
+            />
+          </div>
+          <input
+            id="fileInput"
+            onChange={handleImageChange}
+            type="file"
+            className="hidden w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
                     file:text-sm file:font-semibold
@@ -143,16 +173,26 @@ useEffect(() => {
                   updatePostInput.setCategory_Id(0);
                 }}
                 className={`cursor-pointer px-3 rounded-lg 
-              ${updatePostInput.updateCategory_id === 0 ? "border-2" : "border-2"}  
+              ${
+                updatePostInput.updateCategory_id === 0
+                  ? "border-2"
+                  : "border-2"
+              }  
               ${
                 updatePostInput.updateCategory_id === 0
                   ? "border-orange-400"
                   : "border-black"
               }  
               ${
-                updatePostInput.updateCategory_id === 0 ? "bg-orange-400" : "bg-white"
+                updatePostInput.updateCategory_id === 0
+                  ? "bg-orange-400"
+                  : "bg-white"
               }  
-              ${updatePostInput.updateCategory_id === 0 ? "text-white" : "text-black"}
+              ${
+                updatePostInput.updateCategory_id === 0
+                  ? "text-white"
+                  : "text-black"
+              }
               `}
               >
                 디지털/전자기기
@@ -162,16 +202,26 @@ useEffect(() => {
                   updatePostInput.setCategory_Id(1);
                 }}
                 className={`cursor-pointer px-3 rounded-lg 
-              ${updatePostInput.updateCategory_id === 1 ? "border-2" : "border-2"}  
+              ${
+                updatePostInput.updateCategory_id === 1
+                  ? "border-2"
+                  : "border-2"
+              }  
               ${
                 updatePostInput.updateCategory_id === 1
                   ? "border-orange-400"
                   : "border-black"
               }  
               ${
-                updatePostInput.updateCategory_id === 1 ? "bg-orange-400" : "bg-white"
+                updatePostInput.updateCategory_id === 1
+                  ? "bg-orange-400"
+                  : "bg-white"
               }  
-              ${updatePostInput.updateCategory_id === 1 ? "text-white" : "text-black"}
+              ${
+                updatePostInput.updateCategory_id === 1
+                  ? "text-white"
+                  : "text-black"
+              }
               `}
               >
                 건강/헬스
@@ -181,16 +231,26 @@ useEffect(() => {
                   updatePostInput.setCategory_Id(2);
                 }}
                 className={`cursor-pointer px-3 rounded-lg 
-              ${updatePostInput.updateCategory_id === 2 ? "border-2" : "border-2"}  
+              ${
+                updatePostInput.updateCategory_id === 2
+                  ? "border-2"
+                  : "border-2"
+              }  
               ${
                 updatePostInput.updateCategory_id === 2
                   ? "border-orange-400"
                   : "border-black"
               }  
               ${
-                updatePostInput.updateCategory_id === 2 ? "bg-orange-400" : "bg-white"
+                updatePostInput.updateCategory_id === 2
+                  ? "bg-orange-400"
+                  : "bg-white"
               }  
-              ${updatePostInput.updateCategory_id === 2 ? "text-white" : "text-black"}
+              ${
+                updatePostInput.updateCategory_id === 2
+                  ? "text-white"
+                  : "text-black"
+              }
               `}
               >
                 의류/생활용품
@@ -200,16 +260,26 @@ useEffect(() => {
                   updatePostInput.setCategory_Id(3);
                 }}
                 className={`cursor-pointer px-3 rounded-lg 
-              ${updatePostInput.updateCategory_id === 3 ? "border-2" : "border-2"}  
+              ${
+                updatePostInput.updateCategory_id === 3
+                  ? "border-2"
+                  : "border-2"
+              }  
               ${
                 updatePostInput.updateCategory_id === 3
                   ? "border-orange-400"
                   : "border-black"
               }  
               ${
-                updatePostInput.updateCategory_id === 3 ? "bg-orange-400" : "bg-white"
+                updatePostInput.updateCategory_id === 3
+                  ? "bg-orange-400"
+                  : "bg-white"
               }  
-              ${updatePostInput.updateCategory_id === 3 ? "text-white" : "text-black"}
+              ${
+                updatePostInput.updateCategory_id === 3
+                  ? "text-white"
+                  : "text-black"
+              }
               `}
               >
                 가공식품
@@ -219,16 +289,26 @@ useEffect(() => {
                   updatePostInput.setCategory_Id(4);
                 }}
                 className={`cursor-pointer px-3 rounded-lg 
-              ${updatePostInput.updateCategory_id === 4 ? "border-2" : "border-2"}  
+              ${
+                updatePostInput.updateCategory_id === 4
+                  ? "border-2"
+                  : "border-2"
+              }  
               ${
                 updatePostInput.updateCategory_id === 4
                   ? "border-orange-400"
                   : "border-black"
               }  
               ${
-                updatePostInput.updateCategory_id === 4 ? "bg-orange-400" : "bg-white"
+                updatePostInput.updateCategory_id === 4
+                  ? "bg-orange-400"
+                  : "bg-white"
               }  
-              ${updatePostInput.updateCategory_id === 4 ? "text-white" : "text-black"}
+              ${
+                updatePostInput.updateCategory_id === 4
+                  ? "text-white"
+                  : "text-black"
+              }
               `}
               >
                 가구/인테리어
@@ -238,16 +318,26 @@ useEffect(() => {
                   updatePostInput.setCategory_Id(5);
                 }}
                 className={`cursor-pointer px-3 rounded-lg 
-              ${updatePostInput.updateCategory_id === 5 ? "border-2" : "border-2"}  
+              ${
+                updatePostInput.updateCategory_id === 5
+                  ? "border-2"
+                  : "border-2"
+              }  
               ${
                 updatePostInput.updateCategory_id === 5
                   ? "border-orange-400"
                   : "border-black"
               }  
               ${
-                updatePostInput.updateCategory_id === 5 ? "bg-orange-400" : "bg-white"
+                updatePostInput.updateCategory_id === 5
+                  ? "bg-orange-400"
+                  : "bg-white"
               }  
-              ${updatePostInput.updateCategory_id === 5 ? "text-white" : "text-black"}
+              ${
+                updatePostInput.updateCategory_id === 5
+                  ? "text-white"
+                  : "text-black"
+              }
               `}
               >
                 기타 중고물품
