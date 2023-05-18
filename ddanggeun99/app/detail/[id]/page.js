@@ -12,12 +12,12 @@ export default function Detail() {
   const { id } = useParams();
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const [item, setItem] = useState("");
-  const [like, setLike] = useState();
+  // const [like, setLike] = useState();
   const [likeNum, setLikeNum] = useState(item.likes);
   const accessToken = Cookies.get("accesstoken");
   const refreshToken = Cookies.get("refreshtoken");
   const isLoading = useLoading();
-  
+
   const getDetailItems = async () => {
     try {
       isLoading.onLoading();
@@ -36,19 +36,19 @@ export default function Detail() {
     }
   };
 
-  const getLikedItems = async () => {
-    try {
-      const response = await axios.get(`${serverUrl}/api/items/like`, {
-        headers: {
-          accesstoken: `Bearer ${accessToken}`,
-          refreshtoken: `Bearer ${refreshToken}`,
-        },
-      });
-      setLike(response.data.items.map((v) => v.item_id).includes(Number(id)));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getLikedItems = async () => {
+  //   try {
+  //     const response = await axios.get(`${serverUrl}/api/items/like`, {
+  //       headers: {
+  //         accesstoken: `Bearer ${accessToken}`,
+  //         refreshtoken: `Bearer ${refreshToken}`,
+  //       },
+  //     });
+  //     setLike(response.data.items.map((v) => v.item_id).includes(Number(id)));
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const getTimeDifference = (createdAt) => {
     const serverTime = new Date(createdAt);
@@ -66,13 +66,12 @@ export default function Detail() {
 
   useEffect(() => {
     getDetailItems();
-    getLikedItems();
-  }, [like]);
+    // getLikedItems();
+  }, []);
 
   const handleLike = (updatedLikeNum) => {
     setLikeNum(updatedLikeNum);
   };
-
   return (
     <>
       <div className="flex flex-col gap-10 pb-32">
@@ -127,7 +126,7 @@ export default function Detail() {
         page="detail"
         detailItem={item}
         id={id}
-        like={like}
+        // like={like}
         likeNum={likeNum}
         handleLike={handleLike}
       />

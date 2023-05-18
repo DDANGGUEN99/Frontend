@@ -11,19 +11,39 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
+function Tabbar({ id, page, detailItem, handleLike, likeNum }) {
   const router = useRouter();
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const accessToken = Cookies.get("accesstoken");
   const refreshToken = Cookies.get("refreshtoken");
-  const [isLiked, setIsLiked] = useState(like);
+  // const [isLiked, setIsLiked] = useState(like || false);
+  const [like, setLike] = useState();
+
+  const getLikedItems = async () => {
+    try {
+      const response = await axios.get(`${serverUrl}/api/items/like`, {
+        headers: {
+          accesstoken: `Bearer ${accessToken}`,
+          refreshtoken: `Bearer ${refreshToken}`,
+        },
+      });
+      setLike(response.data.items.map((v) => v.item_id).includes(Number(id)));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
+useEffect(() => {
+  getLikedItems()
+},[])
 
   if (page === "detail") {
     // 좋아요 처리 로직
     const toggleLike = async () => {
       let updatedLikeNum;
-      if (isLiked) {
-        setIsLiked(false);
+      if (like) {
+        setLike(false);
         updatedLikeNum = likeNum - 1;
         try {
           const response = await axios.put(
@@ -41,7 +61,7 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
           console.log(error);
         }
       } else {
-        setIsLiked(true);
+        setLike(true);
         updatedLikeNum = likeNum + 1;
         try {
           const response = await axios.put(
@@ -62,7 +82,7 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
       }
       handleLike(updatedLikeNum);
     };
-    console.log(isLiked);
+    // console.log(isLiked);
     return (
       <>
         <div className=" w-full fixed border-t-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-center text-black flex justify-between items-center max-w-screen-md mx-auto self-center border-x">
@@ -74,12 +94,12 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
               <AiOutlineHeart
                 size={28}
                 className={`${
-                  isLiked ? "fill-orange-400" : "fill-neutral-500/70"
+                  like ? "fill-orange-400" : "fill-neutral-500/70"
                 } absolute -top-[2px] left-[6px]`}
               />
               <AiFillHeart
                 size={24}
-                className={isLiked ? "fill-orange-400" : "fill-white"}
+                className={like ? "fill-orange-400" : "fill-white"}
               />
             </div>
             <div className="flex flex-col ml-4">
