@@ -34,11 +34,14 @@ function Navbar({ page }) {
         setContent,
         setPrice,
         item_images,
-        setItem_images
+        setItem_images,
       } = useCreatePostInput();
 
       const submitCreatePost = async () => {
         try {
+          if (item_images.length === 0) {
+            alert("이미지를 등록해주세요!");
+          }
           const newPost = {
             category_id: category_id,
             title,
@@ -86,13 +89,19 @@ function Navbar({ page }) {
             <RxCaretDown size={"30px"} />
           </div>
           <div className="flex items-center">
-            <button className="mr-4">
+            <button
+              onClick={() => alert("아직 준비중인 기능입니다!")}
+              className="mr-4"
+            >
               <AiOutlineSearch size={"25px"} />
             </button>
-            <button className="mr-4">
+            <button
+              onClick={() => alert("아직 준비중인 기능입니다!")}
+              className="mr-4"
+            >
               <BsList size={"25px"} />
             </button>
-            <button>
+            <button onClick={() => alert("아직 준비중인 기능입니다!")}>
               <BsBell size={"22px"} />
             </button>
           </div>
@@ -146,7 +155,7 @@ function Navbar({ page }) {
             }
           );
           console.log(response);
-          alert("게시글 수정 완료!");
+          alert("게시글 삭제 완료!");
           router.push(`/main`);
         } catch (err) {
           console.log(err);
@@ -279,9 +288,7 @@ function Navbar({ page }) {
     case "interest":
       return (
         <div className="cursor-default flex items-center justify-between px-4 w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
-          <div
-          className="cursor-pointer"
-          >
+          <div className="cursor-pointer">
             <MdNavigateBefore
               onClick={() => {
                 router.push("/mypage");

@@ -8,6 +8,8 @@ import Animate from '../components/Animate';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { useInView } from 'react-intersection-observer';
+import useLoading from '../hooks/useLoading';
+
 
 function Main() {
 
@@ -18,7 +20,8 @@ function Main() {
   const router = useRouter()
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const [items, setItems] = useState([]);
-
+  const loading = useLoading()
+  const isLoading = useLoading()
   const animate = {
     initial: {
       opacity: 0,
@@ -38,7 +41,7 @@ function Main() {
   const getItems = async () => {
     const accessToken = Cookies.get('accesstoken');
     const refreshToken = Cookies.get('refreshtoken');
-  
+    loading.onLoading()
     try {
       const response = await axios.get(`${serverUrl}/api/items`, {
         headers: {
@@ -70,6 +73,7 @@ function Main() {
       setPage((prevPage) => prevPage + 1);
     } catch (error) {
       console.log(error.response.data.errorMessage);
+      loading.offLoading()
     }
   };
 
@@ -126,14 +130,18 @@ function Main() {
             </div>
           ))}
           {/* 글쓰기 버튼  */}
-          <div className="sticky bottom-24 self-end mr-6 flex justify-end">
-            <div
-              onClick={() => router.push("/createpost")}
-              className="cursor-pointer text-center w-32 bg-orange-400 text-white text-xl rounded-full p-4 "
-            >
-              + 글쓰기
-            </div>
+         
+         {
+          isLoading.isLoading === false && <div className="sticky bottom-24 self-end mr-6 flex justify-end">
+          <div
+            onClick={() => router.push("/createpost")}
+            className="cursor-pointer text-center w-32 bg-orange-400 text-white text-xl rounded-full p-4 "
+          >
+            + 글쓰기
           </div>
+        </div>
+         }
+         
 
         </div>
         <Tabbar page="main" />

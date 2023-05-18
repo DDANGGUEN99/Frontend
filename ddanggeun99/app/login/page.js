@@ -8,7 +8,7 @@ import axios from "axios";
 import Header from "../components/header/Header";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-import Animate from '../components/Animate';
+import Animate from "../components/Animate";
 
 export default function Login() {
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
@@ -30,7 +30,6 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(response.data.userData));
       alert("로그인 완료!");
       router.push("/main");
-
     } catch (error) {
       console.log(error.response.data.errorMessage);
     }
@@ -50,7 +49,7 @@ export default function Login() {
     exit: {
       opacity: 0,
     },
-  }
+  };
 
   return (
     <Animate animate={animate}>
@@ -63,14 +62,20 @@ export default function Login() {
         </div>
         <RegisterInput id="loginEmail" label="이메일" />
         <RegisterInput id="loginPassword" label="비밀번호" type="password" />
-        <div className="flex pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 ">
+        <div
+          onClick={() => alert("준비중인 기능입니다!")}
+          className="flex pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 "
+        >
           <div>
             <AiFillGithub />
           </div>
           <div>깃헙 로그인 </div>
         </div>
 
-        <div className="flex pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 ">
+        <div
+          onClick={() => alert("준비중인 기능입니다!")}
+          className="flex pr-10 border-black border-2 cursor-pointer gap-10 justify-center max-w-screen-md self-center w-4/5 bg-white text-black text-2xl rounded-lg py-5 "
+        >
           <div>
             <FcGoogle />
           </div>
@@ -96,8 +101,9 @@ function RegisterInput({ id, label, confirm, type }) {
       </div>
       <Input id={id} label={label} type={type} outline />
       <div
-        className={`flex ml-4 py-0 bg-orange-400 text-white ${confirm && "px-2"
-          } rounded-lg text-center items-center justify-center cursor-pointer`}
+        className={`flex ml-4 py-0 bg-orange-400 text-white ${
+          confirm && "px-2"
+        } rounded-lg text-center items-center justify-center cursor-pointer`}
       >
         {confirm}
       </div>
