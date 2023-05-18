@@ -7,12 +7,14 @@ import { useRouter } from 'next/navigation';
 import Animate from '../components/Animate';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useInView } from 'react-intersection-observer';
 
 function Main() {
   //화면 전환 애니메이션
   const router = useRouter()
-  const [items, setItems] = useState([]);
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  const [items, setItems] = useState([]);
+
   const animate = {
     initial: {
       opacity: 0,
@@ -29,9 +31,6 @@ function Main() {
   }
 
 
-  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
-  const [items, setItems] = useState([]);
-
   const getItems = async () => {
     const accessToken = Cookies.get('accesstoken');
     const refreshToken = Cookies.get('refreshtoken');
@@ -44,6 +43,7 @@ function Main() {
         },
         params: { page: 1 },
       });
+      console.log(response.data.items)
       setItems(response.data.items);
     } catch (error) {
       console.log(error.response.data.errorMessage);
@@ -79,7 +79,7 @@ function Main() {
         {/* 카드 반복 부분 */}
         <div className="mt-16">
           {items.map((item) => (
-            <div key={item.item_id} className="flex items-center border-b p-[10px] border-x" >
+            <div key={item.item_id} className="flex items-center border-b p-[10px] border-x" onClick={()=>{router.push(`detail/${item.item_id}`)}}>
               <div className="w-[130px] ml-[10px]" >
                 <img src={item.thumbnail_url}
                   style={{ borderRadius: "10px" }} />
