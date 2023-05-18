@@ -3,10 +3,10 @@
 import axios from "axios";
 import { useState } from "react";
 import Navbar from "../components/navbar/Navbar";
-import useCloudinaryUrl from "../hooks/useCloudinaryUrl";
 import useCreatePostInput from "../hooks/useCreatePostInput";
 import Animate from "../components/Animate";
 import { BsFillCameraFill } from "react-icons/bs";
+import Cookies from "js-cookie";
 export default function CreatePost() {
   // 화면 전환 애니메이션
   const animate = {
@@ -23,43 +23,41 @@ export default function CreatePost() {
       opacity: 0,
     },
   };
-
-  //cloudinary
-  const cloudinaryUrl = useCloudinaryUrl();
-  const [publicId, setPublicId] = useState(null);
+  const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
+  const accessToken = Cookies.get("accesstoken");
+  const refreshToken = Cookies.get("refreshtoken");
   const [imageUrls, setImageUrls] = useState([]);
-
-  const uploadImage = async (file) => {
-    const formData = new FormData();
-    console.log(file);
-    formData.append("file", file);
-    formData.append("upload_preset", "tuwroqix");
-
-    try {
-      const response = await axios.post(
-        "https://api.cloudinary.com/v1_1/dsav9fenu/image/upload",
-        formData
-      );
-      console.log(response);
-      setPublicId(response.data.public_id);
-      cloudinaryUrl.setCloudinaryUrl(response.data.url);
-      return response.data.url;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const createPostInput = useCreatePostInput();
   //이미지 핸들러
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
+    const formData = new FormData()
     const files = e.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      formData.append('item_images', file);
+    }
+
+    // 로컬이미지 가져오기
     const addImageUrls = Array.from(files).map((file) =>
       URL.createObjectURL(file)
     );
     let newImageUrls = [...imageUrls, ...addImageUrls];
     setImageUrls(newImageUrls);
+
+    try {
+      const response = await axios.post(`${serverUrl}/api/items/imgUpload`,formData ,{
+        headers: {
+          accesstoken: `Bearer ${accessToken}`,
+          refreshtoken: `Bearer ${refreshToken}`,
+        },
+      });
+      createPostInput.setItem_images(response.data.imageData)
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const createPostInput = useCreatePostInput();
 
   const handleChangeInput = (e) => {
     switch (e.target.name) {
@@ -273,7 +271,3 @@ export default function CreatePost() {
     </Animate>
   );
 }
-
-const ImagePreview = ({ imageUrl }) => {
-  return;
-};

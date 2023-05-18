@@ -39,7 +39,6 @@ export default function Detail() {
           refreshtoken: `Bearer ${refreshToken}`,
         },
       });
-
       setLike(response.data.items.map((v) => v.item_id).includes(Number(id)));
     } catch (error) {
       console.log(error);
@@ -66,10 +65,10 @@ export default function Detail() {
   }, []);
 
   const handleLike = (updatedLikeNum) => {
-    console.log(updatedLikeNum);
     setLikeNum(updatedLikeNum);
   };
-console.log(like)
+
+  console.log(like)
   return (
     <>
       <div className="flex flex-col gap-10 pb-32">
@@ -80,7 +79,7 @@ console.log(like)
         <div className="flex justify-between items-center">
           <div className="flex border-y-2 w-full gap-2">
             <div>
-              {item.profile_url === "123" || item.profile_url === "null" ? (
+              {item.profile_url === "" || item.profile_url === "null" ? (
                 <img
                   className="w-20 h-20"
                   width="100%"

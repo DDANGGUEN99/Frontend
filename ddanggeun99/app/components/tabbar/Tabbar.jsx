@@ -18,6 +18,12 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
   const refreshToken = Cookies.get("refreshtoken");
   const [isLiked, setIsLiked] = useState(like);
 
+
+  useEffect(() => {
+    setIsLiked(like)
+  },[])
+
+
   if (page === "detail") {
     // 좋아요 처리 로직
     const toggleLike = async () => {
@@ -61,9 +67,8 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
         }
       }
       handleLike(updatedLikeNum);
-
     };
-console.log(isLiked)
+    console.log(isLiked);
     return (
       <>
         <div className=" w-full fixed border-t-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-center text-black flex justify-between items-center max-w-screen-md mx-auto self-center border-x">
