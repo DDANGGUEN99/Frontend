@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiHomeAlt } from "react-icons/bi";
 import { MdLocationCity } from "react-icons/md";
 import { TiLocationOutline } from "react-icons/ti";
@@ -11,21 +11,24 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-function Tabbar({ id, page, is_liked, detailItem }) {
+function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
   const router = useRouter();
   const serverUrl = process.env.NEXT_PUBLIC_SERVER_URL;
   const accessToken = Cookies.get("accesstoken");
   const refreshToken = Cookies.get("refreshtoken");
+  const [isLiked, setIsLiked] = useState(like);
+
   if (page === "detail") {
-    const [liked, setLiked] = useState(is_liked);
+    // 좋아요 처리 로직
     const toggleLike = async () => {
-      if (liked) {
-        setLiked(false);
-      } else {
-        setLiked(true);
+      let updatedLikeNum;
+      if (isLiked) {
+        setIsLiked(false);
+        updatedLikeNum = likeNum - 1;
         try {
           const response = await axios.put(
-            `${serverUrl}/api/items/${Number(id)}`,{},
+            `${serverUrl}/api/items/${Number(id)}/like`,
+            {},
             {
               headers: {
                 accesstoken: `Bearer ${accessToken}`,
@@ -37,8 +40,30 @@ function Tabbar({ id, page, is_liked, detailItem }) {
         } catch (error) {
           console.log(error);
         }
+      } else {
+        setIsLiked(true);
+        updatedLikeNum = likeNum + 1;
+        try {
+          const response = await axios.put(
+            `${serverUrl}/api/items/${Number(id)}/like`,
+            {},
+            {
+              headers: {
+                accesstoken: `Bearer ${accessToken}`,
+                refreshtoken: `Bearer ${refreshToken}`,
+              },
+            }
+          );
+
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
       }
+      handleLike(updatedLikeNum);
+
     };
+console.log(isLiked)
     return (
       <>
         <div className=" w-full fixed border-t-[2px] py-2 h-20 bottom-0 bg-white z-10 shadow-sm text-center text-black flex justify-between items-center max-w-screen-md mx-auto self-center border-x">
@@ -50,12 +75,12 @@ function Tabbar({ id, page, is_liked, detailItem }) {
               <AiOutlineHeart
                 size={28}
                 className={`${
-                  liked ? "fill-orange-400" : "fill-neutral-500/70"
+                  isLiked ? "fill-orange-400" : "fill-neutral-500/70"
                 } absolute -top-[2px] left-[6px]`}
               />
               <AiFillHeart
                 size={24}
-                className={liked ? "fill-orange-400" : "fill-white"}
+                className={isLiked ? "fill-orange-400" : "fill-white"}
               />
             </div>
             <div className="flex flex-col ml-4">
