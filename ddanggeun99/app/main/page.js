@@ -65,15 +65,16 @@ function Main() {
     loading.onLoading()
 
     try {
+      const nextPage = page + 1; // 다음 페이지 번호 계산
       const response = await axios.get(`${serverUrl}/api/items`, {
         headers: {
           accesstoken: `Bearer ${accessToken}`,
           refreshtoken: `Bearer ${refreshToken}`,
         },
-        params: { page: page + 1 },
+        params: { page: nextPage }, // 다음 페이지 번호 전달
       });
       setItems((prevItems) => [...prevItems, ...response.data.items]);
-      setPage((prevPage) => prevPage + 1);
+      setPage(nextPage); // 페이지 번호 업데이트
       loading.offLoading()
     } catch (error) {
       console.log(error.response.data.errorMessage);
