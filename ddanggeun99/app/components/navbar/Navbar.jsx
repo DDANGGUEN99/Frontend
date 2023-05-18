@@ -24,7 +24,6 @@ function Navbar({ page }) {
   const refreshToken = Cookies.get("refreshtoken");
   switch (page) {
     case "createpost":
-      const cloudinaryUrl = useCloudinaryUrl();
       const {
         category_id,
         title,
@@ -34,7 +33,8 @@ function Navbar({ page }) {
         setTitle,
         setContent,
         setPrice,
-        setItem_images,
+        item_images,
+        setItem_images
       } = useCreatePostInput();
 
       const submitCreatePost = async () => {
@@ -44,7 +44,7 @@ function Navbar({ page }) {
             title,
             content,
             price: Number(price),
-            item_images: cloudinaryUrl.cloudinaryUrl,
+            item_images: item_images.join(","),
           };
           console.log(newPost);
           const response = await axios.post(`${serverUrl}/api/items`, newPost, {
@@ -53,7 +53,6 @@ function Navbar({ page }) {
               refreshtoken: `Bearer ${Cookies.get("refreshtoken")}`,
             },
           });
-          console.log(response);
           setCategory_Id("");
           setTitle("");
           setContent("");
@@ -123,6 +122,7 @@ function Navbar({ page }) {
       useEffect(() => {
         getDetailItems();
       }, []);
+
       let user = null;
       if (localStorage.getItem("user") !== "undefined") {
         user = JSON.parse(localStorage.getItem("user"))?.nickname;
