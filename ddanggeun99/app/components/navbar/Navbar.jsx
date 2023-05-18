@@ -252,22 +252,47 @@ function Navbar({ page }) {
       return (
         <div className="cursor-default flex items-center justify-between px-4 fixed w-full bg-white z-10 shodow-sm text-3xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
           <button className="flex items-center justify-end w-full">
-            <AiOutlineSetting onClick={() => { router.push('/logout') }} />
+            <AiOutlineSetting
+              onClick={() => {
+                router.push("/logout");
+              }}
+            />
           </button>
         </div>
-      )
+      );
     case "logout":
       return (
         <div className="cursor-default flex items-center justify-between px-4 w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
           <button className="flex items-center justify-start w-full ">
-            <MdNavigateBefore onClick={() => { router.push('/mypage') }} size={"32px"} />
+            <MdNavigateBefore
+              onClick={() => {
+                router.push("/mypage");
+              }}
+              size={"32px"}
+            />
             <div className="flex justify-center w-full">
               <p>설정</p>
             </div>
           </button>
         </div>
-      )
-
+      );
+    case "interest":
+      return (
+        <div className="cursor-default flex items-center justify-between px-4 w-full bg-white z-10 shodow-sm text-xl text-center text-black max-w-screen-md mx-auto h-16 border-2 self-center">
+          <div
+          className="cursor-pointer"
+          >
+            <MdNavigateBefore
+              onClick={() => {
+                router.push("/mypage");
+              }}
+              size={"32px"}
+            />
+          </div>
+          <div>관심목록</div>
+          <div></div>
+        </div>
+      );
       break;
   }
 }

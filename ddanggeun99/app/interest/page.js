@@ -69,7 +69,7 @@ function Interest() {
       <Navbar page="interest" />
 
       {/* 카드 반복 부분 */}
-      <div className="mt-16">
+      <div>
         {items.map((item) => 
         (
           <div
