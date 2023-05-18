@@ -19,11 +19,6 @@ function Tabbar({ id, page, like, detailItem, handleLike, likeNum }) {
   const [isLiked, setIsLiked] = useState(false);
 
 
-  useEffect(() => {
-    setIsLiked(like)
-  },[])
-
-
   if (page === "detail") {
     // 좋아요 처리 로직
     const toggleLike = async () => {
