@@ -1,10 +1,10 @@
 "use client";
 
 import { BsList } from "react-icons/bs";
-import { AiOutlineShopping, AiOutlineHeart, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineShopping, AiOutlineHeart} from "react-icons/ai";
 import Navbar from "../components/navbar/Navbar";
 import Tabbar from "../components/tabbar/Tabbar";
-import { MdOutlineNavigateNext, MdNavigateNext } from "react-icons/md";
+import { MdOutlineNavigateNext } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import Animate from "../components/Animate";
 import { useEffect, useState } from "react";

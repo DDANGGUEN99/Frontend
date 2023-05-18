@@ -5,7 +5,7 @@ const useCreatePostInput = create((set) => ({
   title: "",
   content: "",
   price: "",
-  item_images: "",
+  item_images: [],
   stringPrice: "",
   setCategory_Id: (payload) => set({ category_id: payload }),
   setTitle: (payload) => set({ title: payload }),
