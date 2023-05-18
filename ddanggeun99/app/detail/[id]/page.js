@@ -17,6 +17,7 @@ export default function Detail() {
   const accessToken = Cookies.get("accesstoken");
   const refreshToken = Cookies.get("refreshtoken");
   const isLoading = useLoading();
+  
   const getDetailItems = async () => {
     try {
       isLoading.onLoading();

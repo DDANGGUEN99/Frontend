@@ -6,7 +6,7 @@ const Loading = () => {
       <Background>
         <LoadingText>로딩중입니다!</LoadingText>
         <LoadingText>잠시만 기다려주세요.</LoadingText>
-        <img src={"/images/spinner.gif"} />
+        <img src={"/images/spinner3.gif"} />
       </Background>
     </>
   );
